@@ -245,6 +245,16 @@ main{padding-bottom:70px}
    Verlauf kaum lesbar. Deckende helle Füllung + weißer Text lösen das. */
 .cta .btn-ghost{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.4)}
 .cta .btn-ghost:hover{background:rgba(255,255,255,.24);border-color:rgba(255,255,255,.6)}
+/* Ersetzt frühere inline style="display:flex..." Attribute: die CSP
+   (style-src 'self') lässt keine Inline-Styles zu, sie wurden dadurch
+   still ignoriert. Deshalb hier als echte Klassen statt Attribute. */
+.cta-actions,.empty-actions{display:flex;gap:8px;flex-wrap:wrap}
+.empty-actions{justify-content:center;margin-top:2px}
+.empty-lg{margin-top:60px}
+.search-bar-tight{margin-top:20px}
+.modal-toggle-wrap{padding:0 24px}
+.chip-fill{flex:1}
+.mail-preview{min-height:190px;font-size:13px;line-height:1.5}
 
 /* ============================================================
    FAQ
@@ -336,6 +346,7 @@ main{padding-bottom:70px}
   display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
 }
 .admin-panel > header h3{margin:0;font-size:15px;letter-spacing:-.015em}
+.admin-search{padding:7px 11px;border:1px solid var(--line);border-radius:8px;font-size:13.5px;font-family:inherit}
 .admin-rows{max-height:520px;overflow:auto}
 .admin-row{
   display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
@@ -850,7 +861,7 @@ function route(){
 function renderNotFound(){
   document.title = "Seite nicht gefunden – " + CONFIG.siteName;
   document.getElementById("app").innerHTML = `
-    <div class="wrap"><div class="empty" style="margin-top:60px">
+    <div class="wrap"><div class="empty empty-lg">
       <h3>Diese Seite gibt es nicht</h3>
       <p>Vielleicht hat sich die Adresse geändert.</p>
       <a class="btn btn-primary" href="${LINK("")}">Zur Startseite</a>
@@ -956,7 +967,7 @@ function renderHome(){
       </div>`}
     </div>
 
-    <div class="search-bar" style="margin-top:20px">
+    <div class="search-bar search-bar-tight">
       ${ICON_SEARCH}
       <label class="sr" for="q">Uni oder Studiengang suchen</label>
       <input id="q" type="search" placeholder="Uni oder Studiengang suchen …" value="${esc(ui.q)}" autocomplete="off">
@@ -980,7 +991,7 @@ function renderHome(){
         <h3>Deine Gruppe fehlt?</h3>
         <p>Füge deine Ersti- oder Studiengangsgruppe kostenlos hinzu.</p>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div class="cta-actions">
         <button class="btn btn-wa" data-open-submit>${ICON_WA} Link einreichen</button>
         <button class="btn btn-ghost" data-open-submit data-mode="demand">Gruppe vermisst</button>
       </div>
@@ -1092,8 +1103,10 @@ function renderDetail(id){
         <p>${(uni.groups || []).length
             ? "Für diese Suche gibt es keinen Studiengang."
             : "Für " + esc(uni.name) + " ist bisher keine Gruppe eingetragen. Du hast einen Link?"}</p>
-        <button class="btn btn-primary" data-open-submit data-uni="${esc(uni.name)}">Link einreichen</button>
-        <button class="btn btn-ghost" data-open-submit data-mode="demand" data-uni="${esc(uni.name)}" style="margin-left:8px">Gruppe vermisst</button>
+        <div class="empty-actions">
+          <button class="btn btn-primary" data-open-submit data-uni="${esc(uni.name)}">Link einreichen</button>
+          <button class="btn btn-ghost" data-open-submit data-mode="demand" data-uni="${esc(uni.name)}">Gruppe vermisst</button>
+        </div>
       </div>`}
 
     <div class="cta">
@@ -1101,7 +1114,7 @@ function renderDetail(id){
         <h3>Dein Studiengang fehlt?</h3>
         <p>Link vorhanden? Wir hängen ihn unter ${esc(uni.name)}. Noch keine Gruppe? Melde den Bedarf – wir hören uns um.</p>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div class="cta-actions">
         <button class="btn btn-wa" data-open-submit data-uni="${esc(uni.name)}">${ICON_WA} Link einreichen</button>
         <button class="btn btn-ghost" data-open-submit data-mode="demand" data-uni="${esc(uni.name)}">Gruppe vermisst</button>
       </div>
@@ -1134,10 +1147,10 @@ function openSubmit(preUni, mode){
       </div>
       <button class="x" data-close aria-label="Schließen">×</button>
     </div>
-    <div style="padding:0 24px">
-      <div class="filters" role="group" aria-label="Art der Meldung" style="width:100%">
-        <button class="chip" data-mode="link"   style="flex:1">Ich habe einen Link</button>
-        <button class="chip" data-mode="demand" style="flex:1">Ich suche eine Gruppe</button>
+    <div class="modal-toggle-wrap">
+      <div class="filters" role="group" aria-label="Art der Meldung">
+        <button class="chip chip-fill" data-mode="link">Ich habe einen Link</button>
+        <button class="chip chip-fill" data-mode="demand">Ich suche eine Gruppe</button>
       </div>
     </div>
     <form class="modal-body" id="submitForm">
@@ -1308,7 +1321,7 @@ function showMailStep(subject, body, isLink){
     <div class="modal-body">
       <div class="field">
         <label for="mailPreview">Deine Nachricht</label>
-        <textarea id="mailPreview" readonly style="min-height:190px;font-size:13px;line-height:1.5">${esc(plain)}</textarea>
+        <textarea id="mailPreview" class="mail-preview" readonly>${esc(plain)}</textarea>
         <div class="hint">Kein E-Mail-Programm eingerichtet? Text kopieren und selbst an
           ${esc(CONFIG.contactEmail)} schicken.</div>
       </div>
@@ -1452,7 +1465,7 @@ function renderAdmin(){
     <div class="admin-panel">
       <header>
         <h3>Hochschulen</h3>
-        <input id="aSearch" placeholder="Suchen …" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;font-size:13.5px;font-family:inherit">
+        <input id="aSearch" class="admin-search" placeholder="Suchen …">
       </header>
       <div class="admin-rows" id="aList">
         ${sorted.map(u => `
