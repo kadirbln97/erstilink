@@ -182,6 +182,25 @@ def page(cfg, *, title, description, path, body, jsonld=None, noindex=False):
 </footer>
 
 <div id="modalRoot"></div>
+
+<!-- Statisches Erkennungsformular für Netlify Forms: Das eigentliche Formular
+     wird per JS in ein Modal gerendert, Netlifys Build-Bot liest aber nur das
+     ausgelieferte HTML. Dieses versteckte Duplikat mit identischen Feldnamen
+     sorgt dafür, dass Netlify das Formular-Schema kennt und Einreichungen des
+     echten (JS-)Formulars per AJAX annimmt. Wird nie selbst angezeigt oder
+     abgeschickt. -->
+<form name="einreichung" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="bot-field">
+  <input type="text" name="typ">
+  <input type="text" name="uni">
+  <input type="text" name="studiengang">
+  <input type="text" name="link">
+  <input type="text" name="semester">
+  <input type="text" name="name">
+  <input type="email" name="email">
+  <textarea name="anmerkung"></textarea>
+</form>
+
 <script src="/assets/data.js"></script>
 <script src="/assets/app.js"></script>
 </body>

@@ -1150,7 +1150,7 @@ function openSubmit(preUni, mode){
     </form>
     <div class="modal-foot">
       <button class="btn btn-ghost" data-close>Abbrechen</button>
-      <button class="btn btn-primary" type="submit" form="submitForm">E-Mail öffnen</button>
+      <button class="btn btn-primary" type="submit" form="submitForm" id="submitBtn">Senden</button>
     </div>`);
 
   const root = document.getElementById("modalRoot");
@@ -1207,11 +1207,60 @@ function openSubmit(preUni, mode){
       v("sNote") || "–"
     ].join("\n");
 
-    showMailStep(subject, body, isLink);
+    // Direkter Versand über Netlify Forms – landet ohne eigenes Mailprogramm
+    // direkt im Postfach des Betreibers. Klappt das aus irgendeinem Grund
+    // nicht (Netzwerkfehler, Formular-Erkennung noch nicht aktiv o. Ä.),
+    // fällt der Klick auf den bewährten mailto-Weg zurück.
+    const btn = el("submitBtn");
+    if(btn){ btn.disabled = true; btn.textContent = "Wird gesendet…"; }
+
+    const payload = {
+      "form-name": "einreichung",
+      "bot-field": v("sWebsite"),
+      typ: isLink ? "Link" : "Bedarf",
+      uni: v("sUni"),
+      studiengang: v("sCourse"),
+      link: isLink ? v("sLink") : "",
+      semester: v("sSem"),
+      name: v("sName"),
+      email: v("sMail"),
+      anmerkung: v("sNote")
+    };
+    const encoded = Object.keys(payload)
+      .map(k => encodeURIComponent(k) + "=" + encodeURIComponent(payload[k]))
+      .join("&");
+
+    fetch("/", {
+      method: "POST",
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      body: encoded
+    })
+      .then(res => {
+        if(!res.ok) throw new Error("status " + res.status);
+        showSuccessStep(isLink);
+      })
+      .catch(() => showMailStep(subject, body, isLink));
   });
 }
 
-/* Abschluss-Schritt: echter mailto-Link statt JS-Navigation.
+/* Erfolgs-Schritt: Die Meldung ist direkt über Netlify Forms bei uns
+   angekommen – kein eigenes Mailprogramm nötig. */
+function showSuccessStep(isLink){
+  openModal(`
+    <div class="modal-head">
+      <div>
+        <h2>Danke!</h2>
+        <p>${isLink ? "Deine Gruppe ist bei uns angekommen." : "Dein Hinweis ist bei uns angekommen."}
+        Wir melden uns, sobald sie eingetragen ist.</p>
+      </div>
+      <button class="x" data-close aria-label="Schließen">×</button>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-primary" data-close>Schließen</button>
+    </div>`);
+}
+
+/* Rückfall-Schritt (nur bei Fehlern): echter mailto-Link statt JS-Navigation.
    Wer kein Mailprogramm eingerichtet hat, kopiert den Text stattdessen. */
 function showMailStep(subject, body, isLink){
   const href = "mailto:" + encodeURIComponent(CONFIG.contactEmail) +
@@ -1754,15 +1803,22 @@ function renderLegal(which){
     und nicht mit anderen Datenquellen zusammengeführt.</p>
 
     <h2>5. Einreichungen über das Formular</h2>
-    <p>Wenn du eine Gruppe einreichst oder meldest, dass eine Gruppe fehlt, erzeugt die Seite eine
-    <b>vorbereitete E-Mail in deinem eigenen E-Mail-Programm</b>. Es findet keine Übertragung an
-    einen Server statt, solange du nicht selbst auf „Senden“ drückst. Erst mit dem Absenden erhalten
-    wir die von dir eingegebenen Angaben — Hochschule, Studiengang, Link und, falls angegeben, Name
-    und E-Mail-Adresse.</p>
+    <p>Wenn du eine Gruppe einreichst oder meldest, dass eine Gruppe fehlt, wird die Nachricht direkt
+    beim Klick auf „Senden“ über den Formular-Dienst unseres Hosting-Anbieters Netlify („Netlify
+    Forms“) an uns übermittelt. Dabei werden die von dir eingegebenen Angaben verarbeitet — Hochschule,
+    Studiengang, Link und, falls angegeben, Name und E-Mail-Adresse. Netlify speichert die Einreichung
+    zusätzlich vorübergehend in unserem Konto, damit wir sie dort einsehen können; es gilt der bereits
+    unter Ziffer 7 genannte Auftragsverarbeitungsvertrag. Klappt die Übermittlung ausnahmsweise nicht
+    (z. B. bei einer Störung), bietet die Seite ersatzweise an, die Nachricht über dein eigenes
+    E‑Mail-Programm zu versenden.</p>
     <p>Wir verarbeiten diese Angaben ausschließlich, um deine Einreichung zu prüfen und den Link
     einzupflegen oder dir zu antworten. Rechtsgrundlage ist unser berechtigtes Interesse an der
     Bearbeitung von Zuschriften (Art. 6 Abs. 1 lit. f DSGVO). Die Nachrichten werden gelöscht,
-    sobald sie erledigt sind, spätestens am Ende des jeweiligen Semesters.</p>
+    sobald sie erledigt sind, spätestens am Ende des jeweiligen Semesters — sowohl aus unserem
+    E-Mail-Postfach als auch aus dem Formular-Postfach bei Netlify.</p>
+    <p>Ein unsichtbares Zusatzfeld sowie eine Mindestausfüllzeit dienen dazu, automatisiert
+    ausgefüllte Formulare (Bots) zu erkennen und auszusortieren; dabei werden keine zusätzlichen
+    personenbezogenen Daten erhoben.</p>
 
     <h2>6. Externe Links zu Gruppen-Chats</h2>
     <p>Wenn du einen Gruppenlink anklickst, verlässt du diese Website. Ab diesem Moment gelten
@@ -1772,9 +1828,10 @@ function renderLegal(which){
     beitrittst, entscheidest du allein; die anderen Mitglieder sehen dabei in der Regel deine
     Telefonnummer oder deinen Benutzernamen.</p>
 
-    <h2>7. Hosting</h2>
+    <h2>7. Hosting und Formular-Verarbeitung</h2>
     <p>Diese Website wird bei Netlify, Inc., 101 2nd Street, San Francisco, CA 94105, USA,
-    gehostet. Mit diesem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.
+    gehostet. Derselbe Anbieter verarbeitet auch die Formular-Einreichungen (siehe Ziffer 5).
+    Mit diesem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.
     Eine Weitergabe von Daten zu anderen Zwecken, insbesondere zu Werbezwecken an Dritte, findet
     nicht statt.</p>
 
