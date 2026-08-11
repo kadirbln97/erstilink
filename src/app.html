@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ErstiLink – Ersti-Gruppen für deinen Studiengang finden</title>
+<meta name="description" content="ErstiLink bündelt die Ersti-Gruppen der Universitäten und Hochschulen in Deutschland – nach Uni und Studiengang sortiert. Finde deine Gruppe zum Semesterstart.">
+<meta property="og:title" content="ErstiLink – Ersti-Gruppen für deinen Studiengang">
+<meta property="og:description" content="Finde Anschluss an deiner Uni.">
+<meta property="og:site_name" content="ErstiLink">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://erstilink.de/">
+<meta property="og:locale" content="de_DE">
+<meta property="og:image" content="https://erstilink.de/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://erstilink.de/og.png">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://erstilink.de/">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --ink:#12122b;
+  --ink-2:#3d3d5c;
+  --ink-3:#6c6c8a;
+  --line:#e6e6f0;
+  --line-2:#f0f0f7;
+  --bg:#ffffff;
+  --bg-soft:#f8f8fc;
+  --brand:#4f46e5;
+  --brand-dark:#3730a3;
+  --brand-soft:#eef0ff;
+  --wa:#25d366;
+  --wa-dark:#128c4a;
+  --danger:#dc2626;
+  --radius:14px;
+  --radius-sm:10px;
+  --shadow-sm:0 1px 2px rgba(18,18,43,.06);
+  --shadow:0 4px 20px rgba(18,18,43,.08);
+  --shadow-lg:0 20px 60px rgba(18,18,43,.16);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --maxw:1120px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hidden{display:none !important}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-head{
+  position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);
+  backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line);
+}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+.logo{display:inline-flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.02em;text-decoration:none;font-size:17px}
+.logo-mark{
+  width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+  background:linear-gradient(140deg,var(--brand),#7c3aed);color:#fff;font-size:15px;
+}
+.head-actions{display:flex;align-items:center;gap:8px}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 16px;border-radius:var(--radius-sm);border:1px solid transparent;
+  font-size:14.5px;font-weight:600;cursor:pointer;text-decoration:none;
+  transition:background .16s ease,border-color .16s ease,color .16s ease,transform .12s ease;
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-dark)}
+.btn-ghost{background:transparent;color:var(--ink-2);border-color:var(--line)}
+.btn-ghost:hover{background:var(--bg-soft);color:var(--ink)}
+.btn-wa{background:var(--wa);color:#06301a}
+.btn-wa:hover{background:#1fbb5a}
+.btn-danger{background:#fff;color:var(--danger);border-color:#fbd5d5}
+.btn-danger:hover{background:#fef2f2}
+.btn-sm{padding:7px 12px;font-size:13px;border-radius:8px}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;overflow:hidden;color:#fff;
+  background:radial-gradient(1000px 500px at 15% -10%,#6d5cf6 0%,transparent 60%),
+             radial-gradient(800px 500px at 90% 0%,#a855f7 0%,transparent 55%),
+             linear-gradient(160deg,#191840 0%,#0e0d24 100%);
+}
+.hero .wrap{padding-top:64px;padding-bottom:52px}
+.badge{
+  display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;
+  padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);color:#e5e2ff;letter-spacing:.01em;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 3px rgba(37,211,102,.25)}
+.hero h1{
+  margin:20px 0 0;font-size:clamp(30px,5.4vw,52px);line-height:1.08;
+  letter-spacing:-.033em;font-weight:800;max-width:16ch;
+}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#7dffb0,#4ade80);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{margin:18px 0 0;max-width:60ch;color:#c6c3e8;font-size:clamp(15px,2vw,17.5px)}
+.hero-stats{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px}
+.stat b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.stat span{font-size:12.5px;color:#a9a5d4;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+.search-bar{position:relative;margin-top:32px;max-width:560px}
+.search-bar svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);opacity:.45;pointer-events:none}
+.search-bar input{
+  width:100%;padding:15px 44px 15px 46px;border-radius:var(--radius);
+  border:1px solid var(--line);background:#fff;color:var(--ink);
+  font-size:16px;font-family:inherit;box-shadow:var(--shadow);
+}
+.search-bar input::placeholder{color:var(--ink-3)}
+.search-bar input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px rgba(79,70,229,.15)}
+.search-clear{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  border:0;background:transparent;cursor:pointer;padding:8px;color:var(--ink-3);
+  font-size:18px;line-height:1;border-radius:8px;
+}
+.search-clear:hover{background:var(--bg-soft);color:var(--ink)}
+
+/* ============================================================
+   SECTIONS / TOOLBAR
+   ============================================================ */
+main{padding-bottom:70px}
+.section-head{padding-top:44px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between}
+.section-head h2{margin:0;font-size:24px;letter-spacing:-.025em;font-weight:750}
+.section-head .sub{margin:4px 0 0;color:var(--ink-3);font-size:14.5px}
+.filters{display:flex;gap:6px;background:var(--bg-soft);padding:4px;border-radius:11px;border:1px solid var(--line)}
+.filter-select select{
+  padding:10px 13px;border:1px solid var(--line);border-radius:var(--radius-sm);
+  font-size:14px;font-family:inherit;background:#fff;color:var(--ink);font-weight:600;min-width:210px;
+}
+.filter-select select:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,70,229,.13)}
+.chip{
+  border:0;background:transparent;padding:7px 13px;border-radius:8px;cursor:pointer;
+  font-size:13.5px;font-weight:600;color:var(--ink-3);transition:all .15s ease;
+}
+.chip:hover{color:var(--ink)}
+.chip[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:var(--shadow-sm)}
+
+.alpha{display:flex;flex-wrap:wrap;gap:4px;margin-top:22px}
+.alpha button{
+  min-width:29px;height:29px;border-radius:7px;border:1px solid var(--line);
+  background:#fff;color:var(--ink-2);font-size:12.5px;font-weight:650;cursor:pointer;
+  transition:all .14s ease;
+}
+.alpha button:hover:not(:disabled){border-color:var(--brand);color:var(--brand)}
+.alpha button:disabled{opacity:.28;cursor:default}
+.alpha button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* ============================================================
+   UNI LIST
+   ============================================================ */
+.letter-group{margin-top:34px}
+.letter-group > h3{
+  margin:0 0 12px;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--ink-3);
+  text-transform:uppercase;border-bottom:1px solid var(--line-2);padding-bottom:8px;
+}
+.uni-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:8px}
+.uni-card{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:#fff;text-decoration:none;transition:all .15s ease;
+}
+.uni-card:hover{border-color:#c7c4f5;background:var(--brand-soft);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.uni-card .nm{font-size:14.5px;font-weight:600;letter-spacing:-.01em;line-height:1.35}
+.uni-card .meta{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.count{
+  font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;
+  background:#e8fbf0;color:var(--wa-dark);
+}
+.count.zero{background:var(--bg-soft);color:var(--ink-3)}
+.flag{font-size:14px;line-height:1}
+
+.empty{
+  text-align:center;padding:56px 20px;border:1px dashed var(--line);
+  border-radius:var(--radius);background:var(--bg-soft);margin-top:30px;
+}
+.empty h3{margin:0 0 6px;font-size:18px;letter-spacing:-.02em}
+.empty p{margin:0 0 18px;color:var(--ink-3);font-size:14.5px}
+
+/* ============================================================
+   CTA BANNER
+   ============================================================ */
+.cta{
+  margin-top:52px;padding:30px;border-radius:18px;
+  background:linear-gradient(135deg,#1c1b3f,#2b2660);color:#fff;
+  display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;
+}
+.cta h3{margin:0 0 5px;font-size:20px;letter-spacing:-.025em}
+.cta p{margin:0;color:#bdb9e6;font-size:14.5px;max-width:52ch}
+
+/* ============================================================
+   DETAIL VIEW
+   ============================================================ */
+.crumb{
+  display:inline-flex;align-items:center;gap:6px;margin-top:26px;
+  font-size:14px;font-weight:600;color:var(--ink-3);text-decoration:none;
+}
+.crumb:hover{color:var(--brand)}
+.detail-head{margin-top:14px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.detail-head h1{margin:0;font-size:clamp(25px,4vw,36px);letter-spacing:-.032em;line-height:1.14;font-weight:800}
+.detail-head .official{margin:8px 0 0;color:var(--ink-2);font-size:16px;font-weight:500;letter-spacing:-.01em}
+.detail-head .sub{margin:7px 0 0;color:var(--ink-3);font-size:15px}
+.detail-search{margin-top:22px;max-width:420px}
+
+.group-list{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:8px}
+.group-item{
+  display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;
+  padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.group-item:hover{border-color:#c9f0d9;box-shadow:var(--shadow-sm)}
+.group-item .info{min-width:0}
+.group-item .title{font-weight:650;font-size:15.5px;letter-spacing:-.012em}
+.group-item .note{font-size:13px;color:var(--ink-3);margin-top:2px}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.overlay{
+  position:fixed;inset:0;background:rgba(12,12,30,.5);backdrop-filter:blur(3px);
+  display:grid;place-items:center;padding:20px;z-index:80;
+}
+.modal{
+  background:#fff;border-radius:18px;max-width:520px;width:100%;
+  box-shadow:var(--shadow-lg);max-height:88vh;overflow:auto;
+}
+.modal-head{padding:22px 24px 0;display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.modal-head h2{margin:0;font-size:20px;letter-spacing:-.025em}
+.modal-head p{margin:6px 0 0;font-size:14px;color:var(--ink-3)}
+.modal-body{padding:20px 24px}
+.modal-foot{padding:0 24px 22px;display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap}
+.x{border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;color:var(--ink-3);padding:4px 8px;border-radius:8px}
+.x:hover{background:var(--bg-soft);color:var(--ink)}
+
+/* ============================================================
+   FORM
+   ============================================================ */
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:650;margin-bottom:6px;color:var(--ink-2)}
+.field input,.field select,.field textarea{
+  width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:var(--radius-sm);
+  font-size:14.5px;font-family:inherit;background:#fff;color:var(--ink);
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,70,229,.13)
+}
+.field .hint{font-size:12.5px;color:var(--ink-3);margin-top:5px}
+.field textarea{min-height:78px;resize:vertical}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* ============================================================
+   ADMIN
+   ============================================================ */
+.admin-note{
+  margin-top:20px;padding:13px 16px;border-radius:var(--radius-sm);
+  background:#fff8e6;border:1px solid #f5e2ac;color:#7a5b06;font-size:13.5px;
+}
+.admin-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.admin-panel{margin-top:22px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.admin-panel > header{
+  padding:13px 16px;background:var(--bg-soft);border-bottom:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+}
+.admin-panel > header h3{margin:0;font-size:15px;letter-spacing:-.015em}
+.admin-rows{max-height:520px;overflow:auto}
+.admin-row{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+  padding:11px 16px;border-bottom:1px solid var(--line-2);
+}
+.admin-row:last-child{border-bottom:0}
+.admin-row .lbl{font-size:14px;font-weight:600;min-width:0}
+.admin-row .sub{font-size:12.5px;color:var(--ink-3);word-break:break-all}
+.admin-actions{display:flex;gap:6px;flex-shrink:0;align-items:center}
+.admin-actions select{
+  padding:6px 9px;border:1px solid var(--line);border-radius:8px;
+  font-size:12.5px;font-family:inherit;background:#fff;color:var(--ink);
+}
+.status{
+  display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;
+  letter-spacing:.02em;text-transform:uppercase;
+}
+.tag{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--brand-soft);color:var(--brand-dark);letter-spacing:.02em;vertical-align:1px}
+.status.offen{background:#f1f1f7;color:#6c6c8a}
+.status.angeschrieben{background:#fff3d6;color:#8a6100}
+.status.antwort{background:#e0edff;color:#1d4ed8}
+.status.erledigt{background:#e8fbf0;color:var(--wa-dark)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-foot{border-top:1px solid var(--line);background:var(--bg-soft);padding:30px 0}
+.site-foot .wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--ink-3)}
+.site-foot a{color:var(--ink-3);text-decoration:none;margin-left:16px}
+.site-foot a:hover{color:var(--brand)}
+
+.legal{max-width:760px;margin-top:30px}
+.legal h1{font-size:28px;letter-spacing:-.03em;margin:0 0 6px}
+.legal h2{font-size:17px;margin:26px 0 6px;letter-spacing:-.02em}
+.legal p{color:var(--ink-2);font-size:15px}
+.legal a{color:var(--brand);text-decoration:underline;text-underline-offset:2px}
+.legal .lead-note{background:var(--brand-soft);border:1px solid #d7d5f7;border-radius:var(--radius-sm);
+  padding:14px 16px;color:var(--ink);font-size:15px;margin:18px 0 4px}
+.legal .stand{font-size:13.5px;color:var(--ink-3);margin-top:22px}
+.legal h2:first-of-type{margin-top:22px}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
+  background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;
+  font-size:14px;font-weight:600;z-index:120;box-shadow:var(--shadow-lg);
+  animation:pop .22s cubic-bezier(.2,.9,.3,1.2);
+}
+@keyframes pop{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+
+@media (max-width:640px){
+  .hero .wrap{padding-top:44px;padding-bottom:38px}
+  .section-head{align-items:flex-start;flex-direction:column}
+  .uni-grid{grid-template-columns:1fr}
+  .row-2{grid-template-columns:1fr}
+  .cta{padding:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="/"><span class="logo-mark">🎓</span> ErstiLink</a>
+    <div class="head-actions">
+      <button class="btn btn-ghost btn-sm" id="btnSubmit">Gruppe einreichen</button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span>© <span id="year"></span> ErstiLink</span>
+    <nav>
+      <a href="/impressum">Impressum</a>
+      <a href="/datenschutz">Datenschutz</a>
+    </nav>
+  </div>
+</footer>
+
+<div id="modalRoot"></div>
+
+<script>
+/* ============================================================
+   1. KONFIGURATION  –  hier anpassen
+   ============================================================ */
+const CONFIG = {
+  siteName: "ErstiLink",
+  semester: "WiSe 2026/27",
+  siteUrl: "https://erstilink.de",
+  contactEmail: "kandir1997@googlemail.com",   // Einreichungen landen hier
+  storageKey: "erstilink_data_v1",
+  betreiber: {
+    name:    "Kadir Alik",
+    strasse: "Schleiermacher Str. 23",
+    ort:     "10961 Berlin",
+    land:    "Deutschland",
+    email:   "kandir1997@googlemail.com",
+    ustId:   "DE369224920"
+  },
+  legacyKeys: ["uniconnect_data_v1", "erstigruppen_data_v1"]   // Altbestände werden übernommen
+};
+
+/* ============================================================
+   2. DATEN  (Seed – Links werden im Admin-Bereich gepflegt)
+   ============================================================ */
+const SEED_UNIS = [
+  {id:"aachen-fh",name:"Aachen (FH)",full:"Fachhochschule Aachen",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"aachen-rwth",name:"Aachen (RWTH)",full:"Rheinisch-Westfälische Technische Hochschule Aachen",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"aalen-hs",name:"Aalen (HS)",full:"Hochschule Aalen – Technik, Wirtschaft und Gesundheit",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"albstadt-hs-sigmaringen",name:"Albstadt (HS -Sigmaringen)",full:"Hochschule Albstadt-Sigmaringen",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"amberg-oth-aw",name:"Amberg (OTH-AW)",full:"Ostbayerische Technische Hochschule Amberg-Weiden",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"ansbach-hochschule",name:"Ansbach (Hochschule)",full:"Hochschule für angewandte Wissenschaften Ansbach",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"aschaffenburg-th",name:"Aschaffenburg (TH)",full:"Technische Hochschule Aschaffenburg",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"augsburg-tha",name:"Augsburg (THA)",full:"Technische Hochschule Augsburg",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"augsburg-uni",name:"Augsburg (Uni)",full:"Universität Augsburg",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bamberg-uni",name:"Bamberg (Uni)",full:"Otto-Friedrich-Universität Bamberg",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bayreuth-uni",name:"Bayreuth (Uni)",full:"Universität Bayreuth",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-ahh",name:"Berlin (AHH)",full:"Akkon-Hochschule für Humanwissenschaften",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-ash",name:"Berlin (ASH)",full:"Alice Salomon Hochschule Berlin",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-bard-college",name:"Berlin (Bard College)",full:"Bard College Berlin, A Liberal Arts University",land:"Berlin",typ:"Universität",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-barenboim-said-akademie",name:"Berlin (Barenboim-Said Akademie)",full:"Barenboim-Said Akademie",land:"Berlin",typ:"Kunst- und Musikhochschule",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-bbw-hochschule",name:"Berlin (bbw Hochschule)",full:"bbw Hochschule",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-bht",name:"Berlin (BHT)",full:"Berliner Hochschule für Technik",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-biuas",name:"Berlin (BIUAS)",full:"Berlin International University of Applied Sciences",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-bsp",name:"Berlin (BSP)",full:"BSP Business and Law School – Hochschule für Management und Recht",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-charite",name:"Berlin (Charité)",full:"Charité – Universitätsmedizin Berlin",land:"Berlin",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-code",name:"Berlin (CODE)",full:"CODE University of Applied Sciences",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-dbuas",name:"Berlin (DBUAS)",full:"Digital Business University of Applied Sciences",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-dhgs",name:"Berlin (DHGS)",full:"DHGS Deutsche Hochschule für Gesundheit und Sport",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-ehb",name:"Berlin (EHB)",full:"Evangelische Hochschule Berlin",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"kirchlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-escp",name:"Berlin (ESCP)",full:"École supérieure de commerce de Paris",land:"Berlin",typ:"Universität",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-esmt",name:"Berlin (ESMT)",full:"ESMT European School of Management and Technology",land:"Berlin",typ:"Universität",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-fu",name:"Berlin (FU)",full:"Freie Universität Berlin",land:"Berlin",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-hertie-school",name:"Berlin (Hertie School)",full:"Hertie School",land:"Berlin",typ:"Universität",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-hfs-ernst-busch",name:"Berlin (HfS Ernst Busch)",full:"Hochschule für Schauspielkunst Ernst Busch",land:"Berlin",typ:"Kunst- und Musikhochschule",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-hiuas",name:"Berlin (HIUAS)",full:"Health Innovation University of Applied Sciences",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-hmhe",name:"Berlin (HMHE)",full:"Hochschule für Musik Hanns Eisler Berlin",land:"Berlin",typ:"Kunst- und Musikhochschule",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-hs-fresenius",name:"Berlin (HS Fresenius)",full:"Hochschule Fresenius",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-hsap",name:"Berlin (HSAP)",full:"Hochschule für soziale Arbeit und Pädagogik",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-htw",name:"Berlin (HTW)",full:"Hochschule für Technik und Wirtschaft Berlin",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-hu",name:"Berlin (HU)",full:"Humboldt-Universität zu Berlin",land:"Berlin",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-hwr",name:"Berlin (HWR)",full:"Hochschule für Wirtschaft und Recht Berlin",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-ipu",name:"Berlin (IPU)",full:"International Psychoanalytic University Berlin",land:"Berlin",typ:"Universität",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-kbw",name:"Berlin (KBW)",full:"Kunsthochschule Berlin-Weißensee",land:"Berlin",typ:"Kunst- und Musikhochschule",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-khsb",name:"Berlin (KHSB)",full:"Katholische Hochschule für Sozialwesen Berlin",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"kirchlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-media-university",name:"Berlin (Media University)",full:"Media University of Applied Sciences",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-medical-school",name:"Berlin (Medical School)",full:"Medical School Berlin – Hochschule für Gesundheit und Medizin (MSB)",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-mhdi",name:"Berlin (MHDI)",full:"Mediadesign Hochschule für Design und Informatik",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-phb",name:"Berlin (PHB)",full:"Psychologische Hochschule Berlin (PHB)",land:"Berlin",typ:"Universität",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-quadriga-hochschule",name:"Berlin (Quadriga Hochschule)",full:"Quadriga Hochschule Berlin",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-touro-university",name:"Berlin (Touro University)",full:"Touro University Berlin",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-tu",name:"Berlin (TU)",full:"Technische Universität Berlin",land:"Berlin",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-udk",name:"Berlin (UdK)",full:"Universität der Künste Berlin",land:"Berlin",typ:"Kunst- und Musikhochschule",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"berlin-victoria",name:"Berlin (Victoria)",full:"Victoria – Internationale Hochschule",land:"Berlin",typ:"Hochschule für Angewandte Wissenschaften",traeger:"privat",country:"DE",status:"offen",groups:[]},
+  {id:"biberach-an-der-riss-hs-biberach",name:"Biberach an der Riß (HS Biberach)",full:"Hochschule Biberach",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bielefeld-hsbi",name:"Bielefeld (HSBI)",full:"Hochschule Bielefeld",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bielefeld-uni",name:"Bielefeld (Uni)",full:"Universität Bielefeld",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bingen-th",name:"Bingen (TH)",full:"Technische Hochschule Bingen",land:"Rheinland-Pfalz",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bochum-hs",name:"Bochum (HS)",full:"Hochschule Bochum – University of Applied Sciences",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bochum-rub",name:"Bochum (RUB)",full:"Ruhr-Universität Bochum",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bonn-uni",name:"Bonn (Uni)",full:"Rheinische Friedrich-Wilhelms-Universität Bonn",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"brandenburg-an-der-havel-thb",name:"Brandenburg an der Havel (THB)",full:"Technische Hochschule Brandenburg",land:"Brandenburg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"braunschweig-tu",name:"Braunschweig (TU)",full:"Technische Universität Carolo-Wilhelmina zu Braunschweig",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bremen-hs",name:"Bremen (HS)",full:"Hochschule Bremen",land:"Bremen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bremen-uni",name:"Bremen (Uni)",full:"Universität Bremen",land:"Bremen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"bremerhaven-hs",name:"Bremerhaven (HS)",full:"Hochschule Bremerhaven",land:"Bremen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"chemnitz-tu",name:"Chemnitz (TU)",full:"Technische Universität Chemnitz",land:"Sachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"clausthal-zellerfeld-tu-clausthal",name:"Clausthal-Zellerfeld (TU Clausthal)",full:"Technische Universität Clausthal",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"coburg-hochschule",name:"Coburg (Hochschule)",full:"Hochschule für angewandte Wissenschaften Coburg",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"cottbus-btu",name:"Cottbus (BTU)",full:"Brandenburgische Technische Universität Cottbus-Senftenberg",land:"Brandenburg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"darmstadt-hs",name:"Darmstadt (HS)",full:"Hochschule Darmstadt",land:"Hessen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"darmstadt-tu",name:"Darmstadt (TU)",full:"Technische Universität Darmstadt",land:"Hessen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"deggendorf-thd",name:"Deggendorf (THD)",full:"Technische Hochschule Deggendorf",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"dortmund-fh",name:"Dortmund (FH)",full:"Fachhochschule Dortmund",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"dortmund-tu",name:"Dortmund (TU)",full:"Technische Universität Dortmund",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"dresden-htw",name:"Dresden (HTW)",full:"Hochschule für Technik und Wirtschaft Dresden – University of Applied Sciences",land:"Sachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"dresden-tud",name:"Dresden (TUD)",full:"Technische Universität Dresden",land:"Sachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"duisburg-ude",name:"Duisburg (UDE)",full:"Universität Duisburg-Essen",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"duesseldorf-hhu",name:"Düsseldorf (HHU)",full:"Heinrich-Heine-Universität Düsseldorf",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"duesseldorf-hs",name:"Düsseldorf (HS)",full:"Hochschule Düsseldorf",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"eberswalde-hne",name:"Eberswalde (HNE)",full:"Hochschule für nachhaltige Entwicklung Eberswalde",land:"Brandenburg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"emden-hs-leer",name:"Emden (HS /Leer)",full:"Hochschule Emden/Leer",land:"Niedersachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"erfurt-fh",name:"Erfurt (FH)",full:"Fachhochschule Erfurt",land:"Thüringen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"erfurt-uni",name:"Erfurt (Uni)",full:"Universität Erfurt",land:"Thüringen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"erlangen-fau-nuernberg",name:"Erlangen (FAU -Nürnberg)",full:"Friedrich-Alexander-Universität Erlangen-Nürnberg",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"esslingen-am-neckar-hs-esslingen",name:"Esslingen am Neckar (HS Esslingen)",full:"Hochschule Esslingen",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"flensburg-euf",name:"Flensburg (EUF)",full:"Europa-Universität Flensburg",land:"Schleswig-Holstein",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"flensburg-hs",name:"Flensburg (HS)",full:"Hochschule Flensburg",land:"Schleswig-Holstein",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"frankfurt-oder-euv",name:"Frankfurt (Oder) (EUV)",full:"Europa-Universität Viadrina Frankfurt (Oder)",land:"Brandenburg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"frankfurt-am-main-fuas",name:"Frankfurt am Main (FUAS)",full:"Frankfurt University of Applied Sciences",land:"Hessen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"frankfurt-am-main-jwgfm",name:"Frankfurt am Main (JWGFM)",full:"Johann Wolfgang Goethe-Universität Frankfurt am Main",land:"Hessen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"freiberg-tu-bergakademie",name:"Freiberg (TU Bergakademie)",full:"Technische Universität Bergakademie Freiberg",land:"Sachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"freiburg-im-breisgau-alufb",name:"Freiburg im Breisgau (ALUFB)",full:"Albert-Ludwigs-Universität Freiburg im Breisgau",land:"Baden-Württemberg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"freising-haw-weihenstephan-triesdorf",name:"Freising (HAW Weihenstephan-Triesdorf)",full:"Hochschule für angewandte Wissenschaften Weihenstephan-Triesdorf",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"fulda-hs",name:"Fulda (HS)",full:"Hochschule Fulda – University of Applied Sciences",land:"Hessen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"furtwangen-hs",name:"Furtwangen (HS)",full:"Hochschule Furtwangen – Informatik, Technik, Wirtschaft, Medien, Gesundheit",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"geisenheim-hs",name:"Geisenheim (HS)",full:"Hochschule Geisenheim",land:"Hessen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"gelsenkirchen-westfaelische-hochschule",name:"Gelsenkirchen (Westfälische Hochschule)",full:"Westfälische Hochschule Gelsenkirchen, Bocholt, Recklinghausen",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"gera-dhge",name:"Gera (DHGE)",full:"Duale Hochschule Gera-Eisenach",land:"Thüringen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"giessen-jlu",name:"Gießen (JLU)",full:"Justus-Liebig-Universität Gießen",land:"Hessen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"giessen-thm",name:"Gießen (THM)",full:"Technische Hochschule Mittelhessen – THM",land:"Hessen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"greifswald-uni",name:"Greifswald (Uni)",full:"Universität Greifswald",land:"Mecklenburg-Vorpommern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"goettingen-uni",name:"Göttingen (Uni)",full:"Georg-August-Universität Göttingen",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hagen-fernuniversitaet-in",name:"Hagen (Fernuniversität in)",full:"Fernuniversität in Hagen",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"halle-saale-mlu",name:"Halle (Saale) (MLU)",full:"Martin-Luther-Universität Halle-Wittenberg",land:"Sachsen-Anhalt",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hamburg-haw",name:"Hamburg (HAW)",full:"Hochschule für Angewandte Wissenschaften Hamburg",land:"Hamburg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hamburg-hcu",name:"Hamburg (HCU)",full:"HafenCity Universität Hamburg",land:"Hamburg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hamburg-tuhh",name:"Hamburg (TUHH)",full:"Technische Universität Hamburg",land:"Hamburg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hamburg-uhh",name:"Hamburg (UHH)",full:"Universität Hamburg",land:"Hamburg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hamm-hs-lippstadt",name:"Hamm (HS -Lippstadt)",full:"Hochschule Hamm-Lippstadt",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hannover-hsh",name:"Hannover (HsH)",full:"Hochschule Hannover",land:"Niedersachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hannover-leibniz-universitaet",name:"Hannover (Leibniz Universität)",full:"Gottfried Wilhelm Leibniz Universität Hannover",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hannover-mhh",name:"Hannover (MHH)",full:"Medizinische Hochschule Hannover (MHH)",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hannover-sth",name:"Hannover (STH)",full:"Stiftung Tierärztliche Hochschule Hannover",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"heide-fh-westkueste",name:"Heide (FH Westküste)",full:"Fachhochschule Westküste, Hochschule für Wirtschaft und Technik",land:"Schleswig-Holstein",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"heidelberg-uni",name:"Heidelberg (Uni)",full:"Ruprecht-Karls-Universität Heidelberg",land:"Baden-Württemberg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"heilbronn-hs",name:"Heilbronn (HS)",full:"Hochschule Heilbronn, Technik, Wirtschaft, Informatik",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hildesheim-hawk",name:"Hildesheim (HAWK)",full:"HAWK Hochschule für angewandte Wissenschaft und Kunst Hildesheim/Holzminden/Göttingen",land:"Niedersachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hildesheim-uni",name:"Hildesheim (Uni)",full:"Universität Hildesheim",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"hof-hochschule",name:"Hof (Hochschule)",full:"Hochschule für Angewandte Wissenschaften Hof",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"ilmenau-tu",name:"Ilmenau (TU)",full:"Technische Universität Ilmenau",land:"Thüringen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"ingolstadt-thi",name:"Ingolstadt (THI)",full:"Technische Hochschule Ingolstadt",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"iserlohn-fh-suedwestfalen",name:"Iserlohn (FH Südwestfalen)",full:"Fachhochschule Südwestfalen",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"jena-eah",name:"Jena (EAH)",full:"Ernst-Abbe-Hochschule Jena – University of Applied Sciences",land:"Thüringen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"jena-uni",name:"Jena (Uni)",full:"Friedrich-Schiller-Universität Jena",land:"Thüringen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"kaiserslautern-hs",name:"Kaiserslautern (HS)",full:"Hochschule Kaiserslautern (University of Applied Sciences)",land:"Rheinland-Pfalz",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"kaiserslautern-rptu",name:"Kaiserslautern (RPTU)",full:"Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau",land:"Rheinland-Pfalz",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"karlsruhe-hs",name:"Karlsruhe (HS)",full:"Hochschule Karlsruhe – Technik und Wirtschaft",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"karlsruhe-kit",name:"Karlsruhe (KIT)",full:"Karlsruher Institut für Technologie",land:"Baden-Württemberg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"kassel-uni",name:"Kassel (Uni)",full:"Universität Kassel",land:"Hessen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"kempten-hs",name:"Kempten (HS)",full:"Hochschule für angewandte Wissenschaften Kempten",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"kiel-cau",name:"Kiel (CAU)",full:"Christian-Albrechts-Universität zu Kiel",land:"Schleswig-Holstein",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"kiel-haw",name:"Kiel (HAW)",full:"Hochschule für Angewandte Wissenschaften Kiel",land:"Schleswig-Holstein",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"kleve-hs-rhein-waal",name:"Kleve (HS Rhein-Waal)",full:"Hochschule Rhein-Waal – University of Applied Sciences",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"koblenz-hs",name:"Koblenz (HS)",full:"Hochschule Koblenz",land:"Rheinland-Pfalz",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"koblenz-uk",name:"Koblenz (UK)",full:"Universität Koblenz",land:"Rheinland-Pfalz",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"konstanz-htwg",name:"Konstanz (HTWG)",full:"Hochschule Konstanz Technik, Wirtschaft und Gestaltung",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"konstanz-uni",name:"Konstanz (Uni)",full:"Universität Konstanz",land:"Baden-Württemberg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"krefeld-hs-niederrhein",name:"Krefeld (HS Niederrhein)",full:"Hochschule Niederrhein",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"koeln-deutsche-sporthochschule",name:"Köln (Deutsche Sporthochschule)",full:"Deutsche Sporthochschule Köln",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"koeln-th",name:"Köln (TH)",full:"Technische Hochschule Köln",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"koeln-uni",name:"Köln (Uni)",full:"Universität zu Köln",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"koethen-hs-anhalt",name:"Köthen (HS Anhalt)",full:"Hochschule Anhalt – Anhalt University of Applied Sciences",land:"Sachsen-Anhalt",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"landshut-haw",name:"Landshut (HAW)",full:"Hochschule für angewandte Wissenschaften Landshut",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"leipzig-htwk",name:"Leipzig (HTWK)",full:"Hochschule für Technik, Wirtschaft und Kultur Leipzig",land:"Sachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"leipzig-uni",name:"Leipzig (Uni)",full:"Universität Leipzig",land:"Sachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"lemgo-th-ostwestfalen-lippe",name:"Lemgo (TH Ostwestfalen-Lippe)",full:"Technische Hochschule Ostwestfalen-Lippe",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"ludwigshafen-am-rhein-hwg-ludwigshafen",name:"Ludwigshafen am Rhein (HWG Ludwigshafen)",full:"Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",land:"Rheinland-Pfalz",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"luebeck-th",name:"Lübeck (TH)",full:"Technische Hochschule Lübeck",land:"Schleswig-Holstein",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"luebeck-uni",name:"Lübeck (Uni)",full:"Universität zu Lübeck",land:"Schleswig-Holstein",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"lueneburg-uni",name:"Lüneburg (Uni)",full:"Leuphana Universität Lüneburg",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"magdeburg-hs-stendal",name:"Magdeburg (HS -Stendal)",full:"Hochschule Magdeburg-Stendal",land:"Sachsen-Anhalt",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"magdeburg-ovgu",name:"Magdeburg (OVGU)",full:"Otto-von-Guericke-Universität Magdeburg",land:"Sachsen-Anhalt",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"mainz-hs",name:"Mainz (HS)",full:"Hochschule Mainz",land:"Rheinland-Pfalz",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"mainz-jgu",name:"Mainz (JGU)",full:"Johannes Gutenberg-Universität Mainz",land:"Rheinland-Pfalz",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"mannheim-th",name:"Mannheim (TH)",full:"Technische Hochschule Mannheim",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"mannheim-uni",name:"Mannheim (Uni)",full:"Universität Mannheim",land:"Baden-Württemberg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"marburg-uni",name:"Marburg (Uni)",full:"Philipps-Universität Marburg",land:"Hessen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"merseburg-hs",name:"Merseburg (HS)",full:"Hochschule Merseburg",land:"Sachsen-Anhalt",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"mittweida-hsmw",name:"Mittweida (HSMW)",full:"Hochschule Mittweida, University of Applied Sciences",land:"Sachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"muelheim-an-der-ruhr-hs-ruhr-west",name:"Mülheim an der Ruhr (HS Ruhr West)",full:"Hochschule Ruhr West – University of Applied Sciences",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"muenchen-hochschule",name:"München (Hochschule)",full:"Hochschule für angewandte Wissenschaften München",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"muenchen-lmu",name:"München (LMU)",full:"Ludwig-Maximilians-Universität München",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"muenchen-tu",name:"München (TU)",full:"Technische Universität München",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"muenster-fh",name:"Münster (FH)",full:"FH Münster University of Applied Sciences",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"muenster-wwu",name:"Münster (WWU)",full:"Universität Münster",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"neu-ulm-hochschule",name:"Neu-Ulm (Hochschule)",full:"Hochschule für angewandte Wissenschaften Neu-Ulm",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"neubrandenburg-hs",name:"Neubrandenburg (HS)",full:"Hochschule Neubrandenburg – University of Applied Sciences",land:"Mecklenburg-Vorpommern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"nordhausen-hs",name:"Nordhausen (HS)",full:"Hochschule Nordhausen",land:"Thüringen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"nuernberg-th",name:"Nürnberg (TH)",full:"Technische Hochschule Nürnberg Georg Simon Ohm",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"nuernberg-utn",name:"Nürnberg (UTN)",full:"Technische Universität Nürnberg",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"nuertingen-hfwu",name:"Nürtingen (HfWU)",full:"Hochschule für Wirtschaft und Umwelt Nürtingen-Geislingen",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"offenburg-htwm",name:"Offenburg (HTWM)",full:"Hochschule für Technik, Wirtschaft und Medien Offenburg",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"oldenburg-uni",name:"Oldenburg (Uni)",full:"Carl von Ossietzky Universität Oldenburg",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"osnabrueck-hs",name:"Osnabrück (HS)",full:"Hochschule Osnabrück",land:"Niedersachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"osnabrueck-uni",name:"Osnabrück (Uni)",full:"Universität Osnabrück",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"paderborn-uni",name:"Paderborn (Uni)",full:"Universität Paderborn",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"passau-up",name:"Passau (UP)",full:"Universität Passau",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"pforzheim-hs",name:"Pforzheim (HS)",full:"Hochschule Pforzheim – Gestaltung, Technik, Wirtschaft und Recht",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"potsdam-fh",name:"Potsdam (FH)",full:"Fachhochschule Potsdam",land:"Brandenburg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"potsdam-uni",name:"Potsdam (Uni)",full:"Universität Potsdam",land:"Brandenburg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"regensburg-oth",name:"Regensburg (OTH)",full:"Ostbayerische Technische Hochschule Regensburg",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"regensburg-ur",name:"Regensburg (UR)",full:"Universität Regensburg",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"reutlingen-hs",name:"Reutlingen (HS)",full:"Hochschule Reutlingen",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"rosenheim-th",name:"Rosenheim (TH)",full:"Technische Hochschule Rosenheim",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"rostock-uni",name:"Rostock (Uni)",full:"Universität Rostock",land:"Mecklenburg-Vorpommern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"rottenburg-am-neckar-hfr",name:"Rottenburg am Neckar (HFR)",full:"Hochschule für Forstwirtschaft Rottenburg",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"saarbruecken-htw-saar",name:"Saarbrücken (HTW Saar)",full:"Hochschule für Technik und Wirtschaft des Saarlandes",land:"Saarland",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"saarbruecken-universitaet-des-saarlandes",name:"Saarbrücken (Universität des Saarlandes)",full:"Universität des Saarlandes",land:"Saarland",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"sankt-augustin-hs-bonn-rhein-sieg",name:"Sankt Augustin (HS Bonn-Rhein-Sieg)",full:"Hochschule Bonn-Rhein-Sieg, University of Applied Sciences",land:"Nordrhein-Westfalen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"schmalkalden-hs",name:"Schmalkalden (HS)",full:"Hochschule Schmalkalden",land:"Thüringen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"schwaebisch-gmuend-hfg",name:"Schwäbisch Gmünd (HfG)",full:"Hochschule für Gestaltung Schwäbisch Gmünd",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"siegen-uni",name:"Siegen (Uni)",full:"Universität Siegen",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"speyer-duv",name:"Speyer (DUV)",full:"Deutsche Universität für Verwaltungswissenschaften Speyer",land:"Rheinland-Pfalz",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"stralsund-hs",name:"Stralsund (HS)",full:"Hochschule Stralsund",land:"Mecklenburg-Vorpommern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"stuttgart-dhbw",name:"Stuttgart (DHBW)",full:"Duale Hochschule Baden-Württemberg",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"stuttgart-hdm",name:"Stuttgart (HdM)",full:"Hochschule der Medien Stuttgart",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"stuttgart-hts",name:"Stuttgart (HTS)",full:"Hochschule für Technik Stuttgart",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"stuttgart-uni-hohenheim",name:"Stuttgart (Uni Hohenheim)",full:"Universität Hohenheim",land:"Baden-Württemberg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"stuttgart-uni",name:"Stuttgart (Uni)",full:"Universität Stuttgart",land:"Baden-Württemberg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"trier-hs",name:"Trier (HS)",full:"Hochschule Trier – Trier University of Applied Sciences",land:"Rheinland-Pfalz",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"trier-uni",name:"Trier (Uni)",full:"Universität Trier",land:"Rheinland-Pfalz",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"tuebingen-uni",name:"Tübingen (Uni)",full:"Eberhard Karls Universität Tübingen",land:"Baden-Württemberg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"ulm-thu",name:"Ulm (THU)",full:"Technische Hochschule Ulm",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"ulm-uni",name:"Ulm (Uni)",full:"Universität Ulm",land:"Baden-Württemberg",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"vechta-uni",name:"Vechta (Uni)",full:"Universität Vechta",land:"Niedersachsen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"weimar-uni",name:"Weimar (Uni)",full:"Bauhaus-Universität Weimar",land:"Thüringen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"weingarten-rwu",name:"Weingarten (RWU)",full:"Hochschule Ravensburg-Weingarten",land:"Baden-Württemberg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"wernigerode-hs-harz",name:"Wernigerode (HS Harz)",full:"Hochschule Harz, Hochschule für angewandte Wissenschaften (FH)",land:"Sachsen-Anhalt",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"wiesbaden-hs-rheinmain",name:"Wiesbaden (HS RheinMain)",full:"Hochschule RheinMain",land:"Hessen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"wildau-th",name:"Wildau (TH)",full:"Technische Hochschule Wildau",land:"Brandenburg",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"wilhelmshaven-jade-hochschule",name:"Wilhelmshaven (Jade Hochschule)",full:"Jade Hochschule – Wilhelmshaven/Oldenburg/Elsfleth",land:"Niedersachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"wismar-hs",name:"Wismar (HS)",full:"Hochschule Wismar – University of Applied Sciences: Technology, Business and Design",land:"Mecklenburg-Vorpommern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"wolfenbuettel-ostfalia",name:"Wolfenbüttel (Ostfalia)",full:"Hochschule Braunschweig/Wolfenbüttel, Ostfalia Hochschule für angewandte Wissenschaften",land:"Niedersachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"worms-hs",name:"Worms (HS)",full:"Hochschule Worms, University of Applied Sciences",land:"Rheinland-Pfalz",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"wuppertal-uni",name:"Wuppertal (Uni)",full:"Bergische Universität Wuppertal",land:"Nordrhein-Westfalen",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"wuerzburg-thws",name:"Würzburg (THWS)",full:"Technische Hochschule Würzburg-Schweinfurt",land:"Bayern",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"wuerzburg-universitaet",name:"Würzburg (Universität)",full:"Julius-Maximilians-Universität Würzburg",land:"Bayern",typ:"Universität",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"zittau-hs-goerlitz",name:"Zittau (HS /Görlitz)",full:"Hochschule Zittau/Görlitz",land:"Sachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]},
+  {id:"zwickau-whz",name:"Zwickau (WHZ)",full:"Westsächsische Hochschule Zwickau",land:"Sachsen",typ:"Hochschule für Angewandte Wissenschaften",traeger:"staatlich",country:"DE",status:"offen",groups:[]}
+];
+/* ============================================================
+   3. STATE + PERSISTENZ
+   ============================================================ */
+let DATA = [];
+let ui = { q: "", country: "ALL", land: "ALL", letter: null, detailQ: "", adminUni: null, unlocked: false, oFilter: "ALL" };
+
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+
+function loadData(){
+  const base = clone(SEED_UNIS).map(u => Object.assign({ status:"offen", groups:[] }, u));
+
+  let saved = null;
+  try{
+    let raw = localStorage.getItem(CONFIG.storageKey);
+    for(const k of (CONFIG.legacyKeys || [])){ if(!raw) raw = localStorage.getItem(k); }
+    if(raw){
+      const parsed = JSON.parse(raw);
+      if(Array.isArray(parsed) && parsed.length) saved = parsed;
+    }
+  }catch(e){ console.warn("Gespeicherte Daten unlesbar, nutze Seed.", e); }
+
+  if(!saved){ DATA = base; return; }
+
+  // Seed als Grundlage, gespeicherte Gruppen und Status darüberlegen, eigene
+  // Einträge anhängen. So tauchen neu ergänzte Hochschulen nach einem Update
+  // auf, ohne dass bereits gepflegte Links verloren gehen.
+  const byId = new Map(base.map(u => [u.id, u]));
+  saved.forEach(s => {
+    if(!s || !s.id) return;
+    const t = byId.get(s.id);
+    if(t){
+      if(Array.isArray(s.groups) && s.groups.length) t.groups = s.groups;
+      if(s.status) t.status = s.status;
+    } else {
+      byId.set(s.id, Object.assign({ status:"offen", groups:[], country:"DE", full:"", land:"", typ:"", traeger:"" }, s));
+    }
+  });
+  DATA = Array.from(byId.values());
+}
+function saveData(){
+  try{ localStorage.setItem(CONFIG.storageKey, JSON.stringify(DATA)); }
+  catch(e){ toast("Speichern fehlgeschlagen (Speicher voll?)"); }
+}
+
+/* ============================================================
+   4. HELFER
+   ============================================================ */
+
+const FLAG = { DE:"🇩🇪", AT:"🇦🇹", CH:"🇨🇭" };
+const COUNTRY_NAME = { DE:"Deutschland", AT:"Österreich", CH:"Schweiz" };
+
+function esc(s){
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+// Deutsche Transliteration: ü -> ue, ß -> ss
+function norm(s){
+  return String(s || "").toLowerCase()
+    .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+}
+// Reine Akzententfernung: ü -> u
+function fold(s){
+  return String(s || "").toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ß/g,"ss");
+}
+// Sucht wortweise und in beiden Schreibweisen. Damit finden "berlin tu",
+// "tu berlin" und "muenchen lmu" den richtigen Eintrag, obwohl im Namen
+// Klammern stehen: "Berlin (TU)".
+function matches(text, q){
+  if(!q) return true;
+  const hay = [norm(text), fold(text)];
+  const tokens = String(q).trim().split(/\s+/).filter(Boolean);
+  if(!tokens.length) return true;
+  return tokens.every(tok => {
+    const forms = [norm(tok), fold(tok)];
+    return hay.some(a => forms.some(b => b && a.indexOf(b) !== -1));
+  });
+}
+function slugify(s){
+  return norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") || ("uni-" + Date.now());
+}
+function uniqueId(base){
+  let id = base, n = 2;
+  while(DATA.some(u => u.id === id)){ id = base + "-" + (n++); }
+  return id;
+}
+function firstLetter(name){
+  const c = norm(name).charAt(0).toUpperCase();
+  return /[A-Z]/.test(c) ? c : "#";
+}
+function safeUrl(u){
+  const s = String(u || "").trim();
+  return /^https?:\/\//i.test(s) ? s : null;
+}
+function totalGroups(){ return DATA.reduce((n,u) => n + (u.groups ? u.groups.length : 0), 0); }
+function countries(){ return [...new Set(DATA.map(u => u.country).filter(Boolean))]; }
+function laender(){ return [...new Set(DATA.map(u => u.land).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"de")); }
+
+function copyText(text, okMsg){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(() => toast(okMsg))
+      .catch(() => window.prompt("Zum Kopieren markieren:", text));
+  } else {
+    window.prompt("Zum Kopieren markieren:", text);
+  }
+}
+function unisWithGroups(){ return DATA.filter(u => u.groups && u.groups.length).length; }
+
+let toastTimer = null;
+function toast(msg){
+  document.querySelectorAll(".toast").forEach(n => n.remove());
+  const el = document.createElement("div");
+  el.className = "toast"; el.setAttribute("role","status"); el.textContent = msg;
+  document.body.appendChild(el);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.remove(), 2600);
+}
+
+const ICON_SEARCH = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+const ICON_WA = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1s-.8 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.4z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3.1.8.8-3-.2-.3c-.8-1.3-1.3-2.9-1.3-4.4 0-4.5 3.7-8.2 8.2-8.2s8.2 3.7 8.2 8.2-3.6 8.3-8 8.3z"/></svg>';
+
+/* ============================================================
+   5. ROUTER  –  echte Pfade (/uni/aachen-rwth), damit Suchmaschinen
+   jede Uni-Seite einzeln erfassen können. Beim Öffnen der Datei
+   per Doppelklick (file://) läuft alles ohne Adressänderung weiter.
+   ============================================================ */
+const USE_PATHS = location.protocol === "http:" || location.protocol === "https:";
+let filePath = "";   // Route, wenn die Seite lokal ohne Server läuft
+
+function LINK(path){
+  if(!USE_PATHS) return "#/" + path;
+  return "/" + path;
+}
+
+function currentPath(){
+  if(!USE_PATHS) return filePath;
+  return location.pathname.replace(/^\/+|\/+$/g, "");
+}
+
+function go(path, replace){
+  if(USE_PATHS){
+    const url = "/" + path;
+    if(replace) history.replaceState(null, "", url); else history.pushState(null, "", url);
+  } else {
+    filePath = path;
+  }
+  route();
+}
+
+function route(){
+  // Alte Links mit #/… weiterleiten, damit geteilte Adressen weiter funktionieren
+  if(USE_PATHS && location.hash.startsWith("#/")){
+    const legacy = location.hash.replace(/^#\/?/, "");
+    history.replaceState(null, "", "/" + legacy);
+  }
+
+  const parts = currentPath().split("/").filter(Boolean);
+  try{ window.scrollTo(0,0); }catch(_){}
+
+  if(parts[0] === "uni" && parts[1]) return renderDetail(decodeURIComponent(parts[1]));
+  // Die Verwaltung existiert nur in der lokalen admin.html. Dort wird
+  // window.ADMIN_UI gesetzt; online ist sie schlicht nicht vorhanden.
+  if(parts[0] === "admin")           return window.ADMIN_UI ? window.ADMIN_UI() : renderNotFound();
+  if(parts[0] === "impressum")       return renderLegal("impressum");
+  if(parts[0] === "datenschutz")     return renderLegal("datenschutz");
+  if(parts.length)                   return renderNotFound();
+  return renderHome();
+}
+
+function renderNotFound(){
+  document.title = "Seite nicht gefunden – " + CONFIG.siteName;
+  document.getElementById("app").innerHTML = `
+    <div class="wrap"><div class="empty" style="margin-top:60px">
+      <h3>Diese Seite gibt es nicht</h3>
+      <p>Vielleicht hat sich die Adresse geändert.</p>
+      <a class="btn btn-primary" href="${LINK("")}">Zur Startseite</a>
+    </div></div>`;
+}
+
+/* ============================================================
+   6. STARTSEITE
+   ============================================================ */
+function filteredUnis(){
+  const q = ui.q.trim();
+  return DATA.filter(u => {
+    if(ui.country !== "ALL" && u.country !== ui.country) return false;
+    if(ui.land !== "ALL" && u.land !== ui.land) return false;
+    if(ui.letter && firstLetter(u.name) !== ui.letter) return false;
+    if(!q) return true;
+    if(matches(u.name, q) || matches(u.full, q)) return true;
+    return (u.groups || []).some(g => matches(g.name, q));
+  }).sort((a,b) => a.name.localeCompare(b.name, "de"));
+}
+
+function setMeta(name, content){
+  let el = document.querySelector('meta[name="' + name + '"]');
+  if(!el){ el = document.createElement("meta"); el.setAttribute("name", name); document.head.appendChild(el); }
+  el.setAttribute("content", content);
+}
+function setCanonical(url){
+  let el = document.querySelector('link[rel="canonical"]');
+  if(!el){ el = document.createElement("link"); el.rel = "canonical"; document.head.appendChild(el); }
+  el.href = url;
+}
+
+function renderHome(){
+  const multi = countries().length > 1;
+  document.title = CONFIG.siteName + " – Ersti-Gruppen für deinen Studiengang finden";
+  setCanonical(CONFIG.siteUrl + "/");
+  const list = filteredUnis();
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const available = new Set(DATA
+    .filter(u => (ui.country === "ALL" || u.country === ui.country) &&
+                 (ui.land === "ALL" || u.land === ui.land))
+    .map(u => firstLetter(u.name)));
+
+  const groups = {};
+  list.forEach(u => { (groups[firstLetter(u.name)] = groups[firstLetter(u.name)] || []).push(u); });
+
+  const listHtml = Object.keys(groups).sort().map(letter => `
+    <section class="letter-group">
+      <h3>${esc(letter)}</h3>
+      <div class="uni-grid">
+        ${groups[letter].map(u => {
+          const n = (u.groups || []).length;
+          return `<a class="uni-card" href="${LINK("uni/" + encodeURIComponent(u.id))}">
+            <span class="nm">${esc(u.name)}</span>
+            <span class="meta">
+              <span class="count ${n ? "" : "zero"}">${n ? n + " " + (n === 1 ? "Gruppe" : "Gruppen") : "bald"}</span>
+              ${multi ? `<span class="flag" title="${esc(COUNTRY_NAME[u.country] || "")}">${FLAG[u.country] || ""}</span>` : ""}
+            </span>
+          </a>`;
+        }).join("")}
+      </div>
+    </section>`).join("");
+
+  document.getElementById("app").innerHTML = `
+  <section class="hero">
+    <div class="wrap">
+      <span class="badge"><span class="dot"></span> ${esc(CONFIG.siteName)} · ${esc(CONFIG.semester)}</span>
+      <h1>Finde deine <em>Ersti-Gruppe</em> – an deiner Uni, in deinem Studiengang.</h1>
+      <p class="lead">ErstiLink bündelt die Ersti-Gruppen an staatlichen Universitäten und Hochschulen
+      in Deutschland – dazu alle Berliner Hochschulen. Uni wählen, Studiengang suchen, beitreten.</p>
+      <div class="hero-stats">
+        <div class="stat"><b>${DATA.length}</b><span>Hochschulen</span></div>
+        <div class="stat"><b>${totalGroups()}</b><span>Gruppen</span></div>
+        <div class="stat"><b>${multi ? countries().length : laender().length}</b><span>${multi ? "Länder" : "Bundesländer"}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Wähle deine Uni</h2>
+        <p class="sub">${list.length} von ${DATA.length} Hochschulen${ui.land !== "ALL" ? " · " + esc(ui.land) : ""}${ui.letter ? " · " + esc(ui.letter) : ""}</p>
+      </div>
+      ${multi ? `
+      <div class="filters" role="group" aria-label="Nach Land filtern">
+        ${[["ALL","Alle"]].concat(countries().map(c => [c, (FLAG[c]||"") + " " + c])).map(([v,l]) =>
+          `<button class="chip" data-country="${v}" aria-pressed="${ui.country === v}">${l}</button>`).join("")}
+      </div>` : `
+      <div class="filter-select">
+        <label class="sr" for="landSel">Nach Bundesland filtern</label>
+        <select id="landSel">
+          <option value="ALL">Alle Bundesländer</option>
+          ${laender().map(l => `<option value="${esc(l)}"${ui.land === l ? " selected" : ""}>${esc(l)}</option>`).join("")}
+        </select>
+      </div>`}
+    </div>
+
+    <div class="search-bar" style="margin-top:20px">
+      ${ICON_SEARCH}
+      <label class="sr" for="q">Uni oder Studiengang suchen</label>
+      <input id="q" type="search" placeholder="Uni oder Studiengang suchen …" value="${esc(ui.q)}" autocomplete="off">
+      ${ui.q ? '<button class="search-clear" id="qClear" aria-label="Suche löschen">×</button>' : ""}
+    </div>
+
+    <div class="alpha" role="group" aria-label="Nach Anfangsbuchstabe filtern">
+      <button data-letter="" aria-pressed="${!ui.letter}">Alle</button>
+      ${letters.map(l => `<button data-letter="${l}" aria-pressed="${ui.letter === l}" ${available.has(l) ? "" : "disabled"}>${l}</button>`).join("")}
+    </div>
+
+    ${list.length ? listHtml : `
+      <div class="empty">
+        <h3>Keine Treffer</h3>
+        <p>Zu „${esc(ui.q)}“ haben wir nichts gefunden. Fehlt deine Uni?</p>
+        <button class="btn btn-primary" data-open-submit data-mode="demand">Uni vorschlagen</button>
+      </div>`}
+
+    <div class="cta">
+      <div>
+        <h3>Deine Uni oder dein Studiengang fehlt?</h3>
+        <p>Hast du den Einladungslink? Dann rein damit. Wenn nicht: sag uns Bescheid, wir fragen bei der Fachschaft nach.</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-wa" data-open-submit>${ICON_WA} Link einreichen</button>
+        <button class="btn btn-ghost" data-open-submit data-mode="demand" style="color:#dcd9f5;border-color:rgba(255,255,255,.25)">Gruppe vermisst</button>
+      </div>
+    </div>
+  </div>`;
+
+  const q = document.getElementById("q");
+  q.addEventListener("input", e => {
+    ui.q = e.target.value;
+    const pos = e.target.selectionStart;
+    renderHome();
+    const n = document.getElementById("q");
+    n.focus(); try{ n.setSelectionRange(pos,pos); }catch(_){}
+  });
+  const qc = document.getElementById("qClear");
+  if(qc) qc.addEventListener("click", () => { ui.q = ""; renderHome(); document.getElementById("q").focus(); });
+
+  document.querySelectorAll("[data-country]").forEach(b =>
+    b.addEventListener("click", () => { ui.country = b.dataset.country; ui.letter = null; renderHome(); }));
+  const landSel = document.getElementById("landSel");
+  if(landSel) landSel.addEventListener("change", e => { ui.land = e.target.value; ui.letter = null; renderHome(); });
+  document.querySelectorAll("[data-letter]").forEach(b =>
+    b.addEventListener("click", () => { ui.letter = b.dataset.letter || null; renderHome(); }));
+}
+
+/* ============================================================
+   7. UNI-DETAILSEITE
+   ============================================================ */
+function renderDetail(id){
+  const uni = DATA.find(u => u.id === id);
+  const app = document.getElementById("app");
+
+  if(!uni){
+    app.innerHTML = `<div class="wrap"><a class="crumb" href="${LINK("")}">← Alle Unis</a>
+      <div class="empty"><h3>Uni nicht gefunden</h3><p>Dieser Eintrag existiert nicht (mehr).</p>
+      <a class="btn btn-primary" href="${LINK("")}">Zur Übersicht</a></div></div>`;
+    return;
+  }
+
+  const dq = ui.detailQ.trim();
+  const groups = (uni.groups || [])
+    .filter(g => !dq || matches(g.name, dq) || matches(g.note, dq))
+    .sort((a,b) => a.name.localeCompare(b.name, "de"));
+
+  document.title = "Ersti-Gruppen " + uni.name + " – " + CONFIG.siteName;
+  setMeta("description", "Ersti-Gruppen für " + (uni.full || uni.name) + ": WhatsApp-Gruppen nach Studiengang für das " + CONFIG.semester + ".");
+  setCanonical(CONFIG.siteUrl + "/uni/" + uni.id);
+
+  app.innerHTML = `
+  <div class="wrap">
+    <a class="crumb" href="${LINK("")}">← Alle Hochschulen</a>
+    <div class="detail-head">
+      <h1>${esc(uni.name)}</h1>
+      ${uni.full ? `<p class="official">${esc(uni.full)}</p>` : ""}
+      <p class="sub">${[
+          uni.typ ? esc(uni.typ) + (uni.traeger ? ", " + esc(uni.traeger) : "") : "",
+          uni.land ? esc(uni.land) : esc(COUNTRY_NAME[uni.country] || ""),
+          (uni.groups || []).length + " " + ((uni.groups || []).length === 1 ? "Gruppe" : "Gruppen"),
+          esc(CONFIG.semester)
+        ].filter(Boolean).join(" · ")}</p>
+    </div>
+
+    ${(uni.groups || []).length > 6 ? `
+      <div class="search-bar detail-search">
+        ${ICON_SEARCH}
+        <label class="sr" for="dq">Studiengang suchen</label>
+        <input id="dq" type="search" placeholder="Studiengang suchen …" value="${esc(ui.detailQ)}" autocomplete="off">
+      </div>` : ""}
+
+    ${groups.length ? `
+      <ul class="group-list">
+        ${groups.map(g => {
+          const url = safeUrl(g.url);
+          return `<li class="group-item">
+            <div class="info">
+              <div class="title">${esc(g.name)}</div>
+              ${g.note ? `<div class="note">${esc(g.note)}</div>` : ""}
+            </div>
+            ${url
+              ? `<a class="btn btn-wa btn-sm" href="${esc(url)}" target="_blank" rel="noopener noreferrer nofollow">${ICON_WA} Gruppe beitreten</a>`
+              : `<span class="btn btn-ghost btn-sm" aria-disabled="true">Link folgt</span>`}
+          </li>`;
+        }).join("")}
+      </ul>` : `
+      <div class="empty">
+        <h3>${(uni.groups || []).length ? "Kein Treffer" : "Noch keine Gruppen hinterlegt"}</h3>
+        <p>${(uni.groups || []).length
+            ? "Für diese Suche gibt es keinen Studiengang."
+            : "Für " + esc(uni.name) + " ist bisher keine Gruppe eingetragen. Du hast einen Link?"}</p>
+        <button class="btn btn-primary" data-open-submit data-uni="${esc(uni.name)}">Link einreichen</button>
+        <button class="btn btn-ghost" data-open-submit data-mode="demand" data-uni="${esc(uni.name)}" style="margin-left:8px">Gruppe vermisst</button>
+      </div>`}
+
+    <div class="cta">
+      <div>
+        <h3>Dein Studiengang fehlt?</h3>
+        <p>Link vorhanden? Wir hängen ihn unter ${esc(uni.name)}. Noch keine Gruppe? Melde den Bedarf – wir hören uns um.</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-wa" data-open-submit data-uni="${esc(uni.name)}">${ICON_WA} Link einreichen</button>
+        <button class="btn btn-ghost" data-open-submit data-mode="demand" data-uni="${esc(uni.name)}" style="color:#dcd9f5;border-color:rgba(255,255,255,.25)">Gruppe vermisst</button>
+      </div>
+    </div>
+  </div>`;
+
+  const dq2 = document.getElementById("dq");
+  if(dq2) dq2.addEventListener("input", e => {
+    ui.detailQ = e.target.value;
+    const pos = e.target.selectionStart;
+    renderDetail(id);
+    const n = document.getElementById("dq");
+    if(n){ n.focus(); try{ n.setSelectionRange(pos,pos); }catch(_){} }
+  });
+}
+
+/* ============================================================
+   8. EINREICHUNGS-FORMULAR (mailto)
+   ============================================================ */
+function openSubmit(preUni, mode){
+  mode = mode === "demand" ? "demand" : "link";
+  const opts = DATA.slice().sort((a,b) => a.name.localeCompare(b.name,"de"))
+    .map(u => `<option value="${esc(u.name)}"></option>`).join("");
+
+  openModal(`
+    <div class="modal-head">
+      <div>
+        <h2 id="mTitle"></h2>
+        <p id="mSub"></p>
+      </div>
+      <button class="x" data-close aria-label="Schließen">×</button>
+    </div>
+    <div style="padding:0 24px">
+      <div class="filters" role="group" aria-label="Art der Meldung" style="width:100%">
+        <button class="chip" data-mode="link"   style="flex:1">Ich habe einen Link</button>
+        <button class="chip" data-mode="demand" style="flex:1">Ich suche eine Gruppe</button>
+      </div>
+    </div>
+    <form class="modal-body" id="submitForm">
+      <div class="field">
+        <label for="sUni">Uni / Hochschule *</label>
+        <input list="uniOptions" id="sUni" required placeholder="z. B. Aachen (RWTH)" value="${esc(preUni || "")}">
+        <datalist id="uniOptions">${opts}</datalist>
+        <div class="hint">Nicht in der Liste? Einfach frei eintippen.</div>
+      </div>
+      <div class="field">
+        <label for="sCourse">Studiengang *</label>
+        <input id="sCourse" required placeholder="z. B. Maschinenbau B.Sc.">
+      </div>
+      <div class="field" id="linkField">
+        <label for="sLink">Einladungslink *</label>
+        <input id="sLink" type="url" placeholder="https://chat.whatsapp.com/…">
+        <div class="hint">WhatsApp, Signal, Discord oder Telegram.</div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label for="sName">Dein Name</label>
+          <input id="sName" placeholder="optional">
+        </div>
+        <div class="field">
+          <label for="sMail" id="sMailLabel">Deine E-Mail</label>
+          <input id="sMail" type="email" placeholder="optional">
+          <div class="hint" id="sMailHint">Nur für Rückfragen.</div>
+        </div>
+      </div>
+      <div class="field">
+        <label for="sNote">Anmerkung</label>
+        <textarea id="sNote" placeholder="optional"></textarea>
+      </div>
+      <input type="hidden" id="sSem" value="${esc(CONFIG.semester)}">
+    </form>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" data-close>Abbrechen</button>
+      <button class="btn btn-primary" type="submit" form="submitForm">E-Mail öffnen</button>
+    </div>`);
+
+  const root = document.getElementById("modalRoot");
+  const el = id => document.getElementById(id);
+
+  function applyMode(m){
+    mode = m;
+    root.querySelectorAll("[data-mode]").forEach(b =>
+      b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
+
+    const isLink = m === "link";
+    el("mTitle").textContent = isLink ? "Gruppe einreichen" : "Gruppe vermisst";
+    el("mSub").textContent = isLink
+      ? "Wir prüfen den Link und hinterlegen ihn bei deiner Uni."
+      : "Sag uns, was fehlt – wir fragen bei der Fachschaft nach und melden uns, sobald es eine Gruppe gibt.";
+    el("linkField").classList.toggle("hidden", !isLink);
+    el("sLink").required = isLink;
+    el("sMailLabel").textContent = isLink ? "Deine E-Mail" : "Deine E-Mail (empfohlen)";
+    el("sMailHint").textContent = isLink
+      ? "Nur für Rückfragen."
+      : "Damit wir dir Bescheid geben können, sobald die Gruppe steht.";
+  }
+
+  root.querySelectorAll("[data-mode]").forEach(b =>
+    b.addEventListener("click", () => applyMode(b.dataset.mode)));
+  applyMode(mode);
+
+  el("submitForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const v = id => (el(id).value || "").trim();
+    const isLink = mode === "link";
+
+    const subject = (isLink ? "[LINK] " : "[BEDARF] ") + v("sUni") + " – " + v("sCourse");
+    const body = [
+      isLink ? "Neue Gruppe eingereicht" : "Gruppe wird vermisst",
+      "",
+      "Uni / Hochschule: " + v("sUni"),
+      "Studiengang: " + v("sCourse"),
+      isLink ? "Link: " + v("sLink") : "Link: – (noch keine Gruppe bekannt)",
+      "Semester: " + v("sSem"),
+      "Name: " + (v("sName") || "–"),
+      "E-Mail: " + (v("sMail") || "–"),
+      "",
+      "Anmerkung:",
+      v("sNote") || "–"
+    ].join("\n");
+
+    showMailStep(subject, body, isLink);
+  });
+}
+
+/* Abschluss-Schritt: echter mailto-Link statt JS-Navigation.
+   Wer kein Mailprogramm eingerichtet hat, kopiert den Text stattdessen. */
+function showMailStep(subject, body, isLink){
+  const href = "mailto:" + encodeURIComponent(CONFIG.contactEmail) +
+    "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  const plain = "An: " + CONFIG.contactEmail + "\nBetreff: " + subject + "\n\n" + body;
+
+  openModal(`
+    <div class="modal-head">
+      <div>
+        <h2>Fast geschafft</h2>
+        <p>${isLink ? "Danke fürs Einreichen!" : "Danke für den Hinweis!"} Schick die Nachricht ab –
+        wir melden uns, sobald sie eingetragen ist.</p>
+      </div>
+      <button class="x" data-close aria-label="Schließen">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="mailPreview">Deine Nachricht</label>
+        <textarea id="mailPreview" readonly style="min-height:190px;font-size:13px;line-height:1.5">${esc(plain)}</textarea>
+        <div class="hint">Kein E-Mail-Programm eingerichtet? Text kopieren und selbst an
+          ${esc(CONFIG.contactEmail)} schicken.</div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="mailCopy">Text kopieren</button>
+      <a class="btn btn-primary" id="mailOpen" href="${esc(href)}">E-Mail-Programm öffnen</a>
+    </div>`);
+
+  document.getElementById("mailCopy").addEventListener("click", () =>
+    copyText(plain, "Nachricht kopiert"));
+  document.getElementById("mailOpen").addEventListener("click", () =>
+    setTimeout(closeModal, 400));
+}
+
+/* ============================================================
+   9. ADMIN  –  läuft nur lokal
+   ------------------------------------------------------------
+   Alles zwischen ADMIN-START und ADMIN-ENDE landet ausschließlich
+   in der lokalen admin.html, niemals im öffentlichen dist/.
+   Auf einer statischen Seite kann ein Passwort nichts schützen:
+   Was im Browser läuft, liegt offen. Deshalb existiert der
+   Admin-Bereich online gar nicht erst.
+   ============================================================ */
+/* ADMIN-START */
+
+ui.unlocked = true;
+
+
+/* --- Outreach: Fachschaften anschreiben --------------------- */
+const STATUS = {
+  offen:         "Offen",
+  angeschrieben: "Angeschrieben",
+  antwort:       "Antwort erhalten",
+  erledigt:      "Erledigt"
+};
+
+function outreachText(uni){
+  return [
+    "Betreff: Ersti-Gruppen " + CONFIG.semester + " – Verlinkung auf " + CONFIG.siteName,
+    "",
+    "Hallo zusammen,",
+    "",
+    "ich betreibe " + CONFIG.siteName + " (" + CONFIG.siteUrl + ") – eine Sammelstelle, über die",
+    "Erstsemester im deutschsprachigen Raum die Ersti-Gruppe ihres Studiengangs finden.",
+    "Aktuell ist für " + (uni.full || uni.name) + " noch nichts hinterlegt.",
+    "",
+    "Falls ihr für " + CONFIG.semester + " schon Gruppen habt: Schickt mir einfach die",
+    "Einladungslinks mit dem jeweiligen Studiengang, dann trage ich sie ein. Ihr bleibt",
+    "Admin eurer Gruppen, ich verlinke sie nur – und entferne sie jederzeit auf Zuruf.",
+    "",
+    "Für euch heißt das weniger Nachfragen im Postfach, für die Erstis eine Anlaufstelle",
+    "statt Suche in Facebook-Gruppen.",
+    "",
+    "Viele Grüße",
+    "[Dein Name]",
+    CONFIG.siteUrl
+  ].join("\n");
+}
+
+
+/* SHA-256 ohne Abhängigkeiten. Web Crypto gäbe es zwar, steht aber nur
+   in sicheren Kontexten bereit – beim lokalen Öffnen per file:// nicht.
+   Diese Variante läuft überall. */
+function sha256(msg){
+  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+           0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+           0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+           0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+           0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+           0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+           0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+           0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+
+  const bytes=[...new TextEncoder().encode(msg)];
+  const bitLen=bytes.length*8;
+  bytes.push(0x80);
+  while(bytes.length%64!==56) bytes.push(0);
+  for(let i=7;i>=0;i--) bytes.push((bitLen/Math.pow(2,i*8))&0xff);
+
+  const rotr=(x,n)=>(x>>>n)|(x<<(32-n));
+  for(let i=0;i<bytes.length;i+=64){
+    const w=new Array(64);
+    for(let j=0;j<16;j++) w[j]=(bytes[i+j*4]<<24)|(bytes[i+j*4+1]<<16)|(bytes[i+j*4+2]<<8)|bytes[i+j*4+3];
+    for(let j=16;j<64;j++){
+      const s0=rotr(w[j-15],7)^rotr(w[j-15],18)^(w[j-15]>>>3);
+      const s1=rotr(w[j-2],17)^rotr(w[j-2],19)^(w[j-2]>>>10);
+      w[j]=(w[j-16]+s0+w[j-7]+s1)|0;
+    }
+    let [a,b,c,d,e,f,g,h2]=H;
+    for(let j=0;j<64;j++){
+      const S1=rotr(e,6)^rotr(e,11)^rotr(e,25);
+      const ch=(e&f)^(~e&g);
+      const t1=(h2+S1+ch+K[j]+w[j])|0;
+      const S0=rotr(a,2)^rotr(a,13)^rotr(a,22);
+      const maj=(a&b)^(a&c)^(b&c);
+      const t2=(S0+maj)|0;
+      h2=g; g=f; f=e; e=(d+t1)|0; d=c; c=b; b=a; a=(t1+t2)|0;
+    }
+    H=H.map((v,k)=>(v+[a,b,c,d,e,f,g,h2][k])|0);
+  }
+  return Promise.resolve(H.map(v=>(v>>>0).toString(16).padStart(8,"0")).join(""));
+}
+
+function renderAdmin(){
+  const app = document.getElementById("app");
+  document.title = "Admin – " + CONFIG.siteName;
+
+  // Kein Passwort nötig: diese Oberfläche existiert nur als lokale Datei
+  // auf deinem Rechner. Sie wird nie hochgeladen.
+
+  const sorted = DATA.slice().sort((a,b) => a.name.localeCompare(b.name,"de"));
+  const sel = ui.adminUni ? DATA.find(u => u.id === ui.adminUni) : null;
+  const todo = sorted.filter(u => !(u.groups || []).length)
+    .filter(u => ui.oFilter === "ALL" || (u.status || "offen") === ui.oFilter);
+
+  app.innerHTML = `<div class="wrap">
+    <a class="crumb" href="${LINK("")}">← Zur Seite</a>
+    <div class="detail-head">
+      <h1>Admin</h1>
+      <p class="sub">${DATA.length} Hochschulen · ${totalGroups()} Gruppen · ${unisWithGroups()} mit Links ·
+        ${DATA.length - unisWithGroups()} offen</p>
+    </div>
+
+    <div class="admin-note">
+      Änderungen werden im <b>Browser-Speicher dieses Geräts</b> gesichert. Damit sie für alle Besucher
+      gelten: <b>JSON exportieren</b>, den Inhalt in die Datei <code>index.html</code> als neuen
+      <code>SEED_UNIS</code>-Block einsetzen und die Seite neu hochladen.
+    </div>
+
+    <div class="admin-bar">
+      <button class="btn btn-primary btn-sm" id="aAddUni">+ Uni anlegen</button>
+      <button class="btn btn-ghost btn-sm" id="aExport">JSON exportieren</button>
+      <button class="btn btn-ghost btn-sm" id="aImport">JSON importieren</button>
+      <button class="btn btn-ghost btn-sm" id="aSeed">Seed-Block kopieren</button>
+      <button class="btn btn-danger btn-sm" id="aReset">Zurücksetzen</button>
+      <input type="file" id="aFile" accept="application/json,.json" class="hidden">
+    </div>
+
+    <div class="admin-panel">
+      <header>
+        <h3>Hochschulen</h3>
+        <input id="aSearch" placeholder="Suchen …" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;font-size:13.5px;font-family:inherit">
+      </header>
+      <div class="admin-rows" id="aList">
+        ${sorted.map(u => `
+          <div class="admin-row" data-name="${esc(u.name)}">
+            <div>
+              <div class="lbl">${esc(u.name)}${u.land ? ` <span class="tag">${esc(u.land)}</span>` : ""}</div>
+              <div class="sub">${esc(u.full || u.id)} · ${(u.groups || []).length} Gruppen</div>
+            </div>
+            <div class="admin-actions">
+              <button class="btn btn-ghost btn-sm" data-groups="${esc(u.id)}">Gruppen</button>
+              <button class="btn btn-ghost btn-sm" data-edit="${esc(u.id)}">Bearbeiten</button>
+              <button class="btn btn-danger btn-sm" data-del="${esc(u.id)}">Löschen</button>
+            </div>
+          </div>`).join("")}
+      </div>
+    </div>
+
+    <div class="admin-panel">
+      <header>
+        <h3>Outreach · ${todo.length} ${todo.length === 1 ? "Uni" : "Unis"} ohne Gruppe</h3>
+        <div class="admin-actions">
+          <select id="oFilter" aria-label="Nach Status filtern">
+            <option value="ALL"${ui.oFilter === "ALL" ? " selected" : ""}>Alle Status</option>
+            ${Object.keys(STATUS).map(k => `<option value="${k}"${ui.oFilter === k ? " selected" : ""}>${STATUS[k]}</option>`).join("")}
+          </select>
+          <button class="btn btn-ghost btn-sm" id="oCsv">CSV exportieren</button>
+        </div>
+      </header>
+      <div class="admin-rows" id="oList">
+        ${todo.length ? todo.map(u => `
+          <div class="admin-row">
+            <div>
+              <div class="lbl">${esc(u.name)}${u.land ? ` <span class="tag">${esc(u.land)}</span>` : ""}</div>
+              <div class="sub"><span class="status ${esc(u.status || "offen")}">${esc(STATUS[u.status] || STATUS.offen)}</span></div>
+            </div>
+            <div class="admin-actions">
+              <select data-ostatus="${esc(u.id)}" aria-label="Status für ${esc(u.name)}">
+                ${Object.keys(STATUS).map(k => `<option value="${k}"${(u.status || "offen") === k ? " selected" : ""}>${STATUS[k]}</option>`).join("")}
+              </select>
+              <button class="btn btn-ghost btn-sm" data-ocopy="${esc(u.id)}">Anschreiben kopieren</button>
+            </div>
+          </div>`).join("")
+        : `<div class="admin-row"><div class="sub">Keine Uni in diesem Status. ${ui.oFilter === "ALL" ? "Alle Hochschulen haben mindestens eine Gruppe – stark." : ""}</div></div>`}
+      </div>
+    </div>
+
+    ${sel ? `
+    <div class="admin-panel">
+      <header>
+        <h3>Gruppen · ${esc(sel.name)}</h3>
+        <div class="admin-actions">
+          <button class="btn btn-primary btn-sm" id="gAdd">+ Gruppe</button>
+          <button class="btn btn-ghost btn-sm" id="gClose">Schließen</button>
+        </div>
+      </header>
+      <div class="admin-rows">
+        ${(sel.groups || []).length ? sel.groups.map((g,i) => `
+          <div class="admin-row">
+            <div>
+              <div class="lbl">${esc(g.name)}</div>
+              <div class="sub">${esc(g.url || "kein Link")}${g.note ? " · " + esc(g.note) : ""}</div>
+            </div>
+            <div class="admin-actions">
+              <button class="btn btn-ghost btn-sm" data-gedit="${i}">Bearbeiten</button>
+              <button class="btn btn-danger btn-sm" data-gdel="${i}">Löschen</button>
+            </div>
+          </div>`).join("")
+        : `<div class="admin-row"><div class="sub">Noch keine Gruppen für diese Uni.</div></div>`}
+      </div>
+    </div>` : ""}
+  </div>`;
+
+  // --- Uni-Suche im Admin
+  document.getElementById("aSearch").addEventListener("input", e => {
+    const q = e.target.value.trim();
+    document.querySelectorAll("#aList .admin-row").forEach(r => {
+      r.style.display = matches(r.dataset.name || "", q) ? "" : "none";
+    });
+  });
+
+  // --- Uni-Aktionen
+  document.getElementById("aAddUni").addEventListener("click", () => uniForm(null));
+  document.querySelectorAll("[data-edit]").forEach(b =>
+    b.addEventListener("click", () => uniForm(b.dataset.edit)));
+  document.querySelectorAll("[data-groups]").forEach(b =>
+    b.addEventListener("click", () => { ui.adminUni = b.dataset.groups; renderAdmin(); }));
+  document.querySelectorAll("[data-del]").forEach(b =>
+    b.addEventListener("click", () => {
+      const u = DATA.find(x => x.id === b.dataset.del);
+      if(!u) return;
+      if(!confirm(`„${u.name}“ inkl. ${(u.groups||[]).length} Gruppen wirklich löschen?`)) return;
+      DATA = DATA.filter(x => x.id !== u.id);
+      if(ui.adminUni === u.id) ui.adminUni = null;
+      saveData(); renderAdmin(); toast("Uni gelöscht");
+    }));
+
+  // --- Gruppen-Aktionen
+  if(sel){
+    document.getElementById("gAdd").addEventListener("click", () => groupForm(sel.id, -1));
+    document.getElementById("gClose").addEventListener("click", () => { ui.adminUni = null; renderAdmin(); });
+    document.querySelectorAll("[data-gedit]").forEach(b =>
+      b.addEventListener("click", () => groupForm(sel.id, Number(b.dataset.gedit))));
+    document.querySelectorAll("[data-gdel]").forEach(b =>
+      b.addEventListener("click", () => {
+        const i = Number(b.dataset.gdel);
+        if(!confirm(`Gruppe „${sel.groups[i].name}“ löschen?`)) return;
+        sel.groups.splice(i,1); saveData(); renderAdmin(); toast("Gruppe gelöscht");
+      }));
+  }
+
+  // --- Outreach
+  document.getElementById("oFilter").addEventListener("change", e => {
+    ui.oFilter = e.target.value; renderAdmin();
+  });
+  document.querySelectorAll("[data-ostatus]").forEach(s =>
+    s.addEventListener("change", () => {
+      const u = DATA.find(x => x.id === s.dataset.ostatus);
+      if(!u) return;
+      u.status = s.value; saveData(); renderAdmin(); toast("Status: " + STATUS[s.value]);
+    }));
+  document.querySelectorAll("[data-ocopy]").forEach(b =>
+    b.addEventListener("click", () => {
+      const u = DATA.find(x => x.id === b.dataset.ocopy);
+      if(!u) return;
+      copyText(outreachText(u), "Anschreiben für " + u.name + " kopiert");
+    }));
+  document.getElementById("oCsv").addEventListener("click", () => {
+    const q = s => '"' + String(s == null ? "" : s).replace(/"/g,'""') + '"';
+    const rows = [["Hochschule","Offizieller Name","Bundesland","Typ","Träger","Status","Gruppen","Seite"].map(q).join(";")]
+      .concat(sorted.map(u => [
+        u.name, u.full || "", u.land || COUNTRY_NAME[u.country] || "", u.typ || "", u.traeger || "",
+        STATUS[u.status] || STATUS.offen, (u.groups || []).length,
+        CONFIG.siteUrl + "/#/uni/" + u.id
+      ].map(q).join(";")));
+    const blob = new Blob(["\uFEFF" + rows.join("\r\n")], { type:"text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "erstilink-outreach-" + new Date().toISOString().slice(0,10) + ".csv";
+    a.click(); URL.revokeObjectURL(a.href);
+    toast("CSV exportiert");
+  });
+
+  // --- Import / Export
+  document.getElementById("aExport").addEventListener("click", () => {
+    const blob = new Blob([JSON.stringify(DATA,null,2)], { type:"application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "erstilink-data-" + new Date().toISOString().slice(0,10) + ".json";
+    a.click(); URL.revokeObjectURL(a.href);
+    toast("JSON exportiert");
+  });
+  document.getElementById("aSeed").addEventListener("click", () => {
+    const js = "const SEED_UNIS = " + JSON.stringify(DATA,null,2) + ";";
+    navigator.clipboard.writeText(js)
+      .then(() => toast("Seed-Block in der Zwischenablage"))
+      .catch(() => { prompt("Kopiere diesen Block in die index.html:", js); });
+  });
+  document.getElementById("aImport").addEventListener("click", () => document.getElementById("aFile").click());
+  document.getElementById("aFile").addEventListener("change", e => {
+    const f = e.target.files[0]; if(!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try{
+        const p = JSON.parse(r.result);
+        if(!Array.isArray(p) || !p.length || !p[0].id || !p[0].name) throw new Error("Falsches Format");
+        DATA = p.map(u => ({ id:u.id, name:u.name, full:u.full || "", land:u.land || "",
+          typ:u.typ || "", traeger:u.traeger || "", country:u.country || "DE",
+          status: u.status || "offen", groups: Array.isArray(u.groups) ? u.groups : [] }));
+        ui.adminUni = null; saveData(); renderAdmin(); toast("Import erfolgreich");
+      }catch(err){ toast("Import fehlgeschlagen: " + err.message); }
+    };
+    r.readAsText(f);
+    e.target.value = "";
+  });
+  document.getElementById("aReset").addEventListener("click", () => {
+    if(!confirm("Alle lokalen Änderungen verwerfen und zum Auslieferungsstand zurückkehren?")) return;
+    DATA = clone(SEED_UNIS); ui.adminUni = null; saveData(); renderAdmin(); toast("Zurückgesetzt");
+  });
+}
+
+function uniForm(id){
+  const u = id ? DATA.find(x => x.id === id) : null;
+  openModal(`
+    <div class="modal-head">
+      <h2>${u ? "Uni bearbeiten" : "Uni anlegen"}</h2>
+      <button class="x" data-close aria-label="Schließen">×</button>
+    </div>
+    <form class="modal-body" id="uniForm">
+      <div class="field">
+        <label for="uName">Name *</label>
+        <input id="uName" required value="${esc(u ? u.name : "")}" placeholder="z. B. Aachen (RWTH)">
+        <div class="hint">Format wie in der Liste: Ort (Kürzel).</div>
+      </div>
+      <div class="field">
+        <label for="uFull">Offizieller Name</label>
+        <input id="uFull" value="${esc(u && u.full ? u.full : "")}" placeholder="z. B. Rheinisch-Westfälische Technische Hochschule Aachen">
+        <div class="hint">Wird auf der Detailseite angezeigt und mitdurchsucht.</div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label for="uLand">Bundesland</label>
+          <input id="uLand" list="landOptions" value="${esc(u && u.land ? u.land : "")}" placeholder="z. B. Bayern">
+          <datalist id="landOptions">${laender().map(l => `<option value="${esc(l)}"></option>`).join("")}</datalist>
+        </div>
+        <div class="field">
+          <label for="uCountry">Land</label>
+          <select id="uCountry">
+            ${["DE","AT","CH"].map(c => `<option value="${c}" ${u && u.country === c ? "selected" : ""}>${FLAG[c]} ${COUNTRY_NAME[c]}</option>`).join("")}
+          </select>
+        </div>
+      </div>
+    </form>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" data-close>Abbrechen</button>
+      <button class="btn btn-primary" type="submit" form="uniForm">Speichern</button>
+    </div>`);
+
+  document.getElementById("uniForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const name = document.getElementById("uName").value.trim();
+    const full = document.getElementById("uFull").value.trim();
+    const land = document.getElementById("uLand").value.trim();
+    const country = document.getElementById("uCountry").value;
+    if(!name) return;
+    if(u){ u.name = name; u.full = full; u.land = land; u.country = country; }
+    else DATA.push({ id: uniqueId(slugify(name)), name, full, land, country, status: "offen", groups: [] });
+    saveData(); closeModal(); renderAdmin(); toast(u ? "Gespeichert" : "Uni angelegt");
+  });
+}
+
+function groupForm(uniId, index){
+  const uni = DATA.find(u => u.id === uniId); if(!uni) return;
+  uni.groups = uni.groups || [];
+  const g = index >= 0 ? uni.groups[index] : null;
+
+  openModal(`
+    <div class="modal-head">
+      <div>
+        <h2>${g ? "Gruppe bearbeiten" : "Gruppe hinzufügen"}</h2>
+        <p>${esc(uni.name)}</p>
+      </div>
+      <button class="x" data-close aria-label="Schließen">×</button>
+    </div>
+    <form class="modal-body" id="grpForm">
+      <div class="field">
+        <label for="gName">Studiengang *</label>
+        <input id="gName" required value="${esc(g ? g.name : "")}" placeholder="z. B. Maschinenbau B.Sc.">
+      </div>
+      <div class="field">
+        <label for="gUrl">Einladungslink</label>
+        <input id="gUrl" type="url" value="${esc(g ? g.url : "")}" placeholder="https://chat.whatsapp.com/…">
+        <div class="hint">Leer lassen = „Link folgt“ wird angezeigt.</div>
+      </div>
+      <div class="field">
+        <label for="gNote">Zusatz</label>
+        <input id="gNote" value="${esc(g && g.note ? g.note : "")}" placeholder="z. B. nur Bachelor, Jahrgang 2026">
+      </div>
+    </form>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" data-close>Abbrechen</button>
+      <button class="btn btn-primary" type="submit" form="grpForm">Speichern</button>
+    </div>`);
+
+  document.getElementById("grpForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const rec = {
+      name: document.getElementById("gName").value.trim(),
+      url:  document.getElementById("gUrl").value.trim(),
+      note: document.getElementById("gNote").value.trim()
+    };
+    if(!rec.name) return;
+    if(g) uni.groups[index] = rec; else uni.groups.push(rec);
+    saveData(); closeModal(); renderAdmin(); toast("Gespeichert");
+  });
+}
+
+window.ADMIN_UI = renderAdmin;
+
+/* ADMIN-ENDE */
+
+/* ============================================================
+   10. RECHTLICHES
+   ============================================================ */
+function renderLegal(which){
+  const B = CONFIG.betreiber;
+
+  const imp = `
+    <h1>Impressum</h1>
+
+    <h2>Angaben gemäß § 5 DDG</h2>
+    <p>${esc(B.name)}<br>${esc(B.strasse)}<br>${esc(B.ort)}<br>${esc(B.land)}</p>
+
+    <h2>Kontakt</h2>
+    <p>E-Mail: <a href="mailto:${esc(B.email)}">${esc(B.email)}</a></p>
+
+    <h2>Umsatzsteuer</h2>
+    <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:<br>${esc(B.ustId)}</p>
+    <p>Als Kleinunternehmer im Sinne von § 19 Abs. 1 UStG wird keine Umsatzsteuer berechnet
+    und daher auch nicht ausgewiesen.</p>
+
+    <h2>Verantwortlich für den Inhalt</h2>
+    <p>${esc(B.name)}, Anschrift wie oben (§ 18 Abs. 2 MStV).</p>
+
+    <h2>Was diese Website ist</h2>
+    <p>${esc(CONFIG.siteName)} ist eine Linksammlung. Wir führen Einladungslinks zu Gruppen-Chats
+    für Erstsemester zusammen und ordnen sie nach Hochschule und Studiengang. Wir betreiben diese
+    Gruppen nicht, moderieren sie nicht und sind an ihnen nicht beteiligt. Verantwortlich für eine
+    Gruppe ist immer, wer sie angelegt hat.</p>
+
+    <h2>Haftung für Links</h2>
+    <p>Dieses Angebot besteht im Kern aus Links zu Angeboten Dritter, auf deren Inhalte wir keinen
+    Einfluss haben. Für diese fremden Inhalte kann keine Gewähr übernommen werden; verantwortlich
+    ist stets der jeweilige Anbieter oder Betreiber. Zum Zeitpunkt der Verlinkung wurden die Links
+    auf erkennbare Rechtsverstöße geprüft. Eine dauerhafte inhaltliche Kontrolle der verlinkten
+    Gruppen ist ohne konkrete Anhaltspunkte weder zumutbar noch möglich. Bei Bekanntwerden von
+    Rechtsverletzungen entfernen wir betroffene Links umgehend.</p>
+
+    <h2>Hinweise von Hochschulen und Fachschaften</h2>
+    <p>Sie möchten einen Link entfernt oder korrigiert haben? Eine formlose Nachricht an
+    <a href="mailto:${esc(B.email)}">${esc(B.email)}</a> genügt. Wir nehmen den Eintrag
+    kurzfristig heraus und fragen nicht nach Gründen.</p>
+
+    <h2>Marken und Namensnennungen</h2>
+    <p>Namen und Kürzel von Hochschulen werden ausschließlich zur Beschreibung genutzt, damit
+    Studierende die zu ihrer Hochschule passende Gruppe finden. Es besteht keine Verbindung zu
+    den genannten Einrichtungen und keine von ihnen ausgehende Unterstützung oder Genehmigung.
+    Rechte an Namen und Zeichen verbleiben bei den jeweiligen Einrichtungen.</p>
+
+    <h2>Verbraucherstreitbeilegung</h2>
+    <p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
+    Verbraucherschlichtungsstelle teilzunehmen. Anliegen klären wir gerne direkt per E-Mail.</p>
+
+    <h2>Einsatz Künstlicher Intelligenz (Art. 50 KI-VO)</h2>
+    <p>Bei der Erstellung dieser Website wurden KI-gestützte Werkzeuge eingesetzt — für Texte,
+    für die Recherche der Hochschulliste und für den Programmcode. Alle Inhalte werden vor der
+    Veröffentlichung geprüft; die redaktionelle Verantwortung liegt beim oben genannten Anbieter.
+    Auf dieser Website kommunizierst du zu keinem Zeitpunkt mit einem KI-System: Es gibt keinen
+    Chatbot und keinen Assistenten. Anfragen werden von Menschen gelesen und beantwortet.</p>
+
+    <h2>Urheberrecht</h2>
+    <p>Die auf dieser Website veröffentlichten eigenen Inhalte unterliegen dem deutschen
+    Urheberrecht. Eine Vervielfältigung oder Verwendung außerhalb der gesetzlich zulässigen Fälle
+    bedarf der vorherigen schriftlichen Zustimmung.</p>`;
+
+  const dsg = `
+    <h1>Datenschutzerklärung</h1>
+
+    <p class="lead-note">Kurz vorweg: Diese Website hat keine Registrierung, kein Tracking, keine
+    Analyse-Cookies und keine Werbung. Wir wissen nicht, wer du bist, und wollen es auch nicht wissen.</p>
+
+    <h2>1. Verantwortlicher</h2>
+    <p>${esc(B.name)}, ${esc(B.strasse)}, ${esc(B.ort)},
+    <a href="mailto:${esc(B.email)}">${esc(B.email)}</a> — siehe auch Impressum.
+    Ein Datenschutzbeauftragter ist gesetzlich nicht bestellt und aufgrund der Größe des Angebots
+    nicht erforderlich.</p>
+
+    <h2>2. Keine Cookies, kein Tracking</h2>
+    <p>Diese Website setzt <b>keine</b> Cookies zu Marketing- oder Analysezwecken und bindet keine
+    Drittanbieter-Tracker, keine Schriftarten von externen Servern und keine Werbenetzwerke ein.
+    Auf einen Cookie-Banner wird deshalb bewusst verzichtet: Nach § 25 Abs. 2 TDDDG ist für rein
+    technisch notwendige Vorgänge keine Einwilligung nötig, und darüber hinaus findet nichts statt.</p>
+
+    <h2>3. Lokale Speicherung im Browser</h2>
+    <p>Die Linkliste wird im <code>localStorage</code> deines Browsers abgelegt, damit die Seite
+    ohne Server auskommt. Im Admin-Bereich werden dort zusätzlich die vom Betreiber gepflegten
+    Einträge gesichert. Diese Daten liegen ausschließlich auf deinem Gerät, werden nicht an uns
+    übertragen und enthalten keine personenbezogenen Angaben zu dir. Du kannst sie jederzeit über
+    die Einstellungen deines Browsers löschen.</p>
+
+    <h2>4. Server-Logfiles</h2>
+    <p>Beim Aufruf dieser Website erfasst unser Hosting-Dienstleister automatisch Daten in
+    Server-Logfiles: IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, übertragene
+    Datenmenge, Referrer sowie Browser- und Betriebssystem-Informationen. Diese Verarbeitung ist
+    technisch erforderlich, um die Website auszuliefern und ihre Stabilität und Sicherheit zu
+    gewährleisten. Rechtsgrundlage ist unser berechtigtes Interesse an einem sicheren, störungsfreien
+    Betrieb (Art. 6 Abs. 1 lit. f DSGVO). Die Daten werden nach kurzer Zeit automatisch gelöscht
+    und nicht mit anderen Datenquellen zusammengeführt.</p>
+
+    <h2>5. Einreichungen über das Formular</h2>
+    <p>Wenn du eine Gruppe einreichst oder meldest, dass eine Gruppe fehlt, erzeugt die Seite eine
+    <b>vorbereitete E-Mail in deinem eigenen E-Mail-Programm</b>. Es findet keine Übertragung an
+    einen Server statt, solange du nicht selbst auf „Senden“ drückst. Erst mit dem Absenden erhalten
+    wir die von dir eingegebenen Angaben — Hochschule, Studiengang, Link und, falls angegeben, Name
+    und E-Mail-Adresse.</p>
+    <p>Wir verarbeiten diese Angaben ausschließlich, um deine Einreichung zu prüfen und den Link
+    einzupflegen oder dir zu antworten. Rechtsgrundlage ist unser berechtigtes Interesse an der
+    Bearbeitung von Zuschriften (Art. 6 Abs. 1 lit. f DSGVO). Die Nachrichten werden gelöscht,
+    sobald sie erledigt sind, spätestens am Ende des jeweiligen Semesters.</p>
+
+    <h2>6. Externe Links zu Gruppen-Chats</h2>
+    <p>Wenn du einen Gruppenlink anklickst, verlässt du diese Website. Ab diesem Moment gelten
+    ausschließlich die Datenschutzbestimmungen des jeweiligen Anbieters — bei WhatsApp etwa die von
+    Meta Platforms Ireland Ltd., bei Telegram die der Telegram FZ-LLC. Darauf haben wir keinen
+    Einfluss und erhalten davon auch keine Rückmeldung. Ob und mit welchem Namen du einer Gruppe
+    beitrittst, entscheidest du allein; die anderen Mitglieder sehen dabei in der Regel deine
+    Telefonnummer oder deinen Benutzernamen.</p>
+
+    <h2>7. Hosting</h2>
+    <p>Diese Website wird bei einem externen Dienstleister gehostet. Mit diesem besteht ein Vertrag
+    zur Auftragsverarbeitung nach Art. 28 DSGVO. Eine Weitergabe von Daten zu anderen Zwecken,
+    insbesondere zu Werbezwecken an Dritte, findet nicht statt.</p>
+
+    <h2>8. Datenübermittlung in Drittländer</h2>
+    <p>Soweit unser Hosting-Anbieter Daten außerhalb der EU verarbeitet, erfolgt dies auf Grundlage
+    des Angemessenheitsbeschlusses der EU-Kommission zum EU-US Data Privacy Framework beziehungsweise
+    auf Grundlage von Standardvertragsklauseln nach Art. 46 Abs. 2 lit. c DSGVO. Trotz dieser
+    Garantien lässt sich nicht vollständig ausschließen, dass Behörden im Drittland auf Daten zugreifen.</p>
+
+    <h2>9. Deine Rechte</h2>
+    <p>Du hast jederzeit das Recht auf Auskunft über die zu dir gespeicherten Daten (Art. 15 DSGVO),
+    auf Berichtigung (Art. 16), auf Löschung (Art. 17), auf Einschränkung der Verarbeitung (Art. 18),
+    auf Datenübertragbarkeit (Art. 20) sowie auf Widerspruch gegen Verarbeitungen, die auf einem
+    berechtigten Interesse beruhen (Art. 21 DSGVO). Für alle Anliegen genügt eine formlose E-Mail an
+    <a href="mailto:${esc(B.email)}">${esc(B.email)}</a>.</p>
+
+    <h2>10. Beschwerderecht</h2>
+    <p>Unabhängig davon kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren.
+    Für uns zuständig ist:</p>
+    <p>Berliner Beauftragte für Datenschutz und Informationsfreiheit<br>
+    Alt-Moabit 59–61, 10555 Berlin<br>
+    <a href="https://www.datenschutz-berlin.de" target="_blank" rel="noopener noreferrer">www.datenschutz-berlin.de</a></p>
+
+    <h2>11. Keine automatisierte Entscheidungsfindung</h2>
+    <p>Eine automatisierte Entscheidungsfindung oder ein Profiling im Sinne von Art. 22 DSGVO
+    findet nicht statt.</p>
+
+    <h2>12. Künstliche Intelligenz</h2>
+    <p>Auf dieser Website ist kein Chatbot und kein KI-Assistent im Einsatz. Angaben aus
+    Einreichungen werden nicht an KI-Systeme übermittelt und nicht zum Training von KI-Modellen
+    verwendet. Wo KI bei der Erstellung der Inhalte eingesetzt wurde, ist im
+    <a href="${LINK("impressum")}">Impressum</a> offengelegt.</p>
+
+    <p class="stand">Stand: ${new Date().toLocaleDateString("de-DE",{month:"long",year:"numeric"})}</p>
+    <p class="stand">Diese Erklärung beschreibt den tatsächlichen Betrieb dieser Website, ersetzt
+    aber keine Rechtsberatung.</p>`;
+
+  document.title = (which === "impressum" ? "Impressum" : "Datenschutzerklärung") + " – " + CONFIG.siteName;
+  setMeta("robots", "noindex");
+  setCanonical(CONFIG.siteUrl + "/" + which);
+  document.getElementById("app").innerHTML =
+    `<div class="wrap"><a class="crumb" href="${LINK("")}">← Zur Startseite</a>
+     <article class="legal">${which === "impressum" ? imp : dsg}</article></div>`;
+}
+
+/* ============================================================
+   11. MODAL-INFRASTRUKTUR
+   ============================================================ */
+let lastFocus = null;
+function openModal(html){
+  lastFocus = document.activeElement;
+  const root = document.getElementById("modalRoot");
+  root.innerHTML = `<div class="overlay" role="dialog" aria-modal="true"><div class="modal">${html}</div></div>`;
+  root.querySelector(".overlay").addEventListener("mousedown", e => {
+    if(e.target.classList.contains("overlay")) closeModal();
+  });
+  root.querySelectorAll("[data-close]").forEach(b => b.addEventListener("click", closeModal));
+  const first = root.querySelector("input,select,textarea,button");
+  if(first) first.focus();
+  document.body.style.overflow = "hidden";
+}
+function closeModal(){
+  document.getElementById("modalRoot").innerHTML = "";
+  document.body.style.overflow = "";
+  if(lastFocus && lastFocus.focus) lastFocus.focus();
+}
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+
+/* ============================================================
+   12. INIT
+   ============================================================ */
+// Defensiv: die lokale Verwaltung nutzt ein anderes Gerüst als die Website,
+// dort fehlen einzelne dieser Elemente.
+const yearEl = document.getElementById("year");
+if(yearEl) yearEl.textContent = new Date().getFullYear();
+
+const submitBtn = document.getElementById("btnSubmit");
+if(submitBtn) submitBtn.addEventListener("click", () => openSubmit("", "link"));
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-open-submit]");
+  if(t) openSubmit(t.dataset.uni || "", t.dataset.mode || "link");
+});
+// Interne Links selbst behandeln, statt die Seite neu zu laden
+document.addEventListener("click", e => {
+  if(e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  const a = e.target.closest("a");
+  if(!a || a.target === "_blank" || a.hasAttribute("download")) return;
+
+  const raw = a.getAttribute("href") || "";
+  let path = null;
+  if(raw.startsWith("#/"))                      path = raw.slice(2);
+  else if(raw.startsWith("/") && !raw.startsWith("//")) path = raw.slice(1);
+  if(path === null) return;
+
+  e.preventDefault();
+  go(path.replace(/\/+$/, ""));
+});
+window.addEventListener("popstate", route);
+window.addEventListener("hashchange", () => { if(!USE_PATHS) route(); });
+
+loadData();
+
+// GitHub-Pages-Fallback: 404.html hat die eigentliche Route hinterlegt
+try{
+  const saved = sessionStorage.getItem("redirectPath");
+  if(saved){
+    sessionStorage.removeItem("redirectPath");
+    if(USE_PATHS && saved !== "/") history.replaceState(null, "", saved);
+  }
+}catch(_){}
+
+route();
+</script>
+</body>
+</html>

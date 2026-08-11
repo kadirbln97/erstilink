@@ -1,0 +1,7 @@
+# Jede Uni hat eine echte Datei – ein SPA-Fallback wäre hier schädlich,
+# weil unbekannte Adressen dann mit Status 200 statt 404 antworten würden.
+# Netlify liefert vorhandene Dateien aus und fällt sonst auf 404.html zurück.
+
+# Verwaltung existiert online nicht
+/admin      /404.html   404!
+/admin/*    /404.html   404!

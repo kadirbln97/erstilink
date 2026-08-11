@@ -1,0 +1,24 @@
+# Erzeugte Website – Netlify baut sie bei jedem Push selbst
+dist/
+
+# Lokale Verwaltung: gehört niemals in ein öffentliches Repository
+admin.html
+erstilink_data.json
+erstilink_data_neu.json
+bot_state.json
+
+# Werkzeuge und Rohdaten
+node_modules/
+__pycache__/
+*.pyc
+build/
+mk_og.py
+de_hochschulen.txt
+at_hochschulen.txt
+ch_hochschulen.txt
+de_klassifiziert.txt
+seed_*.js
+package*.json
+
+# System
+.DS_Store

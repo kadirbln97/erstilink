@@ -1,0 +1,76 @@
+# Netlify-Konfiguration für erstilink.de
+#
+# Netlify baut die Seite selbst: bei jedem Push nach GitHub läuft build.py
+# und veröffentlicht dist/. Der Ordner dist/ muss deshalb nicht im Repo liegen.
+
+[build]
+  command = "python3 build.py"
+  publish = "dist"
+
+# Jede Unteradresse liefert die passende Datei aus; existiert sie nicht,
+# übernimmt 404.html. Kein SPA-Fallback mehr nötig, weil jede Uni eine
+# echte Datei hat.
+[[redirects]]
+  from = "/admin"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# www auf die Hauptdomain umleiten, damit Google nur eine Variante sieht
+[[redirects]]
+  from = "https://www.erstilink.de/*"
+  to = "https://erstilink.de/:splat"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Bestimmt, was der Browser laden und ausführen darf. Alles kommt von
+    # der eigenen Domain; externe Skripte, Frames und Formularziele sind
+    # ausgeschlossen. Das ist der wirksamste Schutz gegen eingeschleusten Code.
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+
+    # Erzwingt HTTPS für zwei Jahre, auch für Unterdomains
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+
+    # Verhindert, dass der Browser Dateitypen errät
+    X-Content-Type-Options = "nosniff"
+
+    # Verbietet das Einbetten der Seite in fremde Frames
+    X-Frame-Options = "DENY"
+
+    # Beim Klick auf externe Gruppenlinks wird nur die Domain übermittelt,
+    # nicht die genaue Uni-Seite
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Zugriff auf Kamera, Mikrofon und Standort wird gar nicht erst erlaubt
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()"
+
+    Cross-Origin-Opener-Policy = "same-origin"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/uni/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
