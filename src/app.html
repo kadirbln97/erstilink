@@ -111,12 +111,21 @@ button{font-family:inherit}
   border:1px solid rgba(255,255,255,.18);color:#e5e2ff;letter-spacing:.01em;
 }
 .dot{width:6px;height:6px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 3px rgba(37,211,102,.25)}
+.hero .kicker{margin:16px 0 0;font-size:14.5px;font-weight:600;color:#a9a5d4;letter-spacing:-.005em}
 .hero h1{
-  margin:20px 0 0;font-size:clamp(30px,5.4vw,52px);line-height:1.08;
+  margin:10px 0 0;font-size:clamp(30px,5.4vw,52px);line-height:1.08;
   letter-spacing:-.033em;font-weight:800;max-width:16ch;
 }
 .hero h1 em{font-style:normal;background:linear-gradient(90deg,#7dffb0,#4ade80);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p.lead{margin:18px 0 0;max-width:60ch;color:#c6c3e8;font-size:clamp(15px,2vw,17.5px)}
+.hero-steps{
+  list-style:none;margin:26px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px 22px;counter-reset:step;
+}
+.hero-steps li{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:650;color:#e5e2ff}
+.hero-steps span{
+  display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);font-size:12px;font-weight:800;flex-shrink:0;
+}
 .hero-stats{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px}
 .stat b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em}
 .stat span{font-size:12.5px;color:#a9a5d4;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
@@ -211,6 +220,15 @@ main{padding-bottom:70px}
 }
 .cta h3{margin:0 0 5px;font-size:20px;letter-spacing:-.025em}
 .cta p{margin:0;color:#bdb9e6;font-size:14.5px;max-width:52ch}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq{margin-top:52px}
+.faq h2{margin:0 0 20px;font-size:24px;letter-spacing:-.025em;font-weight:750}
+.faq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px 28px}
+.faq-item h3{margin:0 0 6px;font-size:15.5px;font-weight:700;letter-spacing:-.01em}
+.faq-item p{margin:0;color:var(--ink-3);font-size:14.5px;line-height:1.55}
 
 /* ============================================================
    DETAIL VIEW
@@ -824,7 +842,7 @@ function setCanonical(url){
 
 function renderHome(){
   const multi = countries().length > 1;
-  document.title = CONFIG.siteName + " – Ersti-Gruppen für deinen Studiengang finden";
+  document.title = CONFIG.siteName + " – WhatsApp-Gruppen für Erstsemester finden";
   setCanonical(CONFIG.siteUrl + "/");
   const list = filteredUnis();
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -857,9 +875,16 @@ function renderHome(){
   <section class="hero">
     <div class="wrap">
       <span class="badge"><span class="dot"></span> ${esc(CONFIG.siteName)} · ${esc(CONFIG.semester)}</span>
-      <h1>Finde deine <em>Ersti-Gruppe</em> – an deiner Uni, in deinem Studiengang.</h1>
-      <p class="lead">ErstiLink bündelt die Ersti-Gruppen an staatlichen Universitäten und Hochschulen
-      in Deutschland – dazu alle Berliner Hochschulen. Uni wählen, Studiengang suchen, beitreten.</p>
+      <p class="kicker">${esc(CONFIG.siteName)} sammelt Ersti- und Uni-Gruppen aus ganz Deutschland.</p>
+      <h1>Finde deine <em>Ersti-Gruppe</em> an deiner Uni</h1>
+      <p class="lead">Finde die passende WhatsApp-Gruppe für Erstsemester an deiner Universität oder
+      Hochschule. Wähle deine Uni und deinen Studiengang, tritt deiner Ersti-Gruppe bei und vernetze
+      dich schon vor dem Semesterstart mit deinen Kommilitonen.</p>
+      <ol class="hero-steps">
+        <li><span>1</span>Uni auswählen</li>
+        <li><span>2</span>Studiengang finden</li>
+        <li><span>3</span>Gruppe beitreten</li>
+      </ol>
       <div class="hero-stats">
         <div class="stat"><b>${DATA.length}</b><span>Hochschulen</span></div>
         <div class="stat"><b>${totalGroups()}</b><span>Gruppen</span></div>
@@ -909,14 +934,36 @@ function renderHome(){
 
     <div class="cta">
       <div>
-        <h3>Deine Uni oder dein Studiengang fehlt?</h3>
-        <p>Hast du den Einladungslink? Dann rein damit. Wenn nicht: sag uns Bescheid, wir fragen bei der Fachschaft nach.</p>
+        <h3>Deine Gruppe fehlt?</h3>
+        <p>Füge deine Ersti- oder Studiengangsgruppe kostenlos hinzu.</p>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn btn-wa" data-open-submit>${ICON_WA} Link einreichen</button>
         <button class="btn btn-ghost" data-open-submit data-mode="demand" style="color:#dcd9f5;border-color:rgba(255,255,255,.25)">Gruppe vermisst</button>
       </div>
     </div>
+
+    <section class="faq" aria-labelledby="faqHeading">
+      <h2 id="faqHeading">Häufige Fragen</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>Wie finde ich meine Ersti-Gruppe?</h3>
+          <p>Wähle oben deine Uni aus der Liste oder nutze die Suche. Auf der Uni-Seite siehst du alle hinterlegten WhatsApp-Gruppen nach Studiengang.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Ist ${esc(CONFIG.siteName)} kostenlos?</h3>
+          <p>Ja, komplett kostenlos – sowohl das Beitreten zu einer Gruppe als auch das Einreichen eines Links.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Meine Uni oder mein Studiengang fehlt, was jetzt?</h3>
+          <p>Über „Link einreichen" kannst du eine WhatsApp-Gruppe hinzufügen. Hast du noch keinen Link? Melde den Bedarf über „Gruppe vermisst" – wir fragen bei der Fachschaft nach.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Sind die Gruppen offiziell von der Uni?</h3>
+          <p>Nein. ${esc(CONFIG.siteName)} ist ein unabhängiges Verzeichnis. Die Gruppen werden von Studierenden oder Fachschaften betrieben, nicht von den Hochschulen selbst.</p>
+        </div>
+      </div>
+    </section>
   </div>`;
 
   const q = document.getElementById("q");

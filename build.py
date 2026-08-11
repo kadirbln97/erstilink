@@ -119,15 +119,19 @@ def page(cfg, *, title, description, path, body, jsonld=None, noindex=False):
         '<meta property="og:image:width" content="1200">',
         '<meta property="og:image:height" content="630">',
         '<meta name="twitter:card" content="summary_large_image">',
+        '<meta name="twitter:title" content="%s">' % E(title),
+        '<meta name="twitter:description" content="%s">' % E(description),
         '<meta name="twitter:image" content="%s/og.png">' % E(cfg["siteUrl"]),
         '<meta name="theme-color" content="#4f46e5">',
         '<link rel="icon" type="image/png" href="/favicon.png">',
         '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
         '<link rel="stylesheet" href="/assets/style.css">',
     ]
-    if jsonld:
+    # jsonld darf ein einzelnes Objekt oder eine Liste mehrerer Schemas sein
+    # (z. B. WebSite + FAQPage auf derselben Seite) – jedes bekommt sein eigenes Script-Tag.
+    for block in (jsonld if isinstance(jsonld, list) else [jsonld] if jsonld else []):
         head.append('<script type="application/ld+json">%s</script>'
-                    % json.dumps(jsonld, ensure_ascii=False, separators=(",", ":")))
+                    % json.dumps(block, ensure_ascii=False, separators=(",", ":")))
     head.append('</head>')
 
     return "\n".join(head) + """
@@ -199,9 +203,16 @@ def home_body(cfg, unis):
   <section class="hero">
     <div class="wrap">
       <span class="badge"><span class="dot"></span> %(name)s · %(sem)s</span>
-      <h1>Finde deine <em>Ersti-Gruppe</em> – an deiner Uni, in deinem Studiengang.</h1>
-      <p class="lead">%(name)s bündelt die Ersti-Gruppen an staatlichen Universitäten und Hochschulen
-      in Deutschland – dazu alle Berliner Hochschulen. Uni wählen, Studiengang suchen, beitreten.</p>
+      <p class="kicker">%(name)s sammelt Ersti- und Uni-Gruppen aus ganz Deutschland.</p>
+      <h1>Finde deine <em>Ersti-Gruppe</em> an deiner Uni</h1>
+      <p class="lead">Finde die passende WhatsApp-Gruppe für Erstsemester an deiner Universität oder
+      Hochschule. Wähle deine Uni und deinen Studiengang, tritt deiner Ersti-Gruppe bei und vernetze
+      dich schon vor dem Semesterstart mit deinen Kommilitonen.</p>
+      <ol class="hero-steps">
+        <li><span>1</span>Uni auswählen</li>
+        <li><span>2</span>Studiengang finden</li>
+        <li><span>3</span>Gruppe beitreten</li>
+      </ol>
       <div class="hero-stats">
         <div class="stat"><b>%(n)d</b><span>Hochschulen</span></div>
         <div class="stat"><b>%(g)d</b><span>Gruppen</span></div>
@@ -218,6 +229,39 @@ def home_body(cfg, unis):
       </div>
     </div>
     %(blocks)s
+
+    <div class="cta">
+      <div>
+        <h3>Deine Gruppe fehlt?</h3>
+        <p>Füge deine Ersti- oder Studiengangsgruppe kostenlos hinzu.</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-wa" data-open-submit>Link einreichen</button>
+        <button class="btn btn-ghost" data-open-submit data-mode="demand" style="color:#dcd9f5;border-color:rgba(255,255,255,.25)">Gruppe vermisst</button>
+      </div>
+    </div>
+
+    <section class="faq" aria-labelledby="faqHeading">
+      <h2 id="faqHeading">Häufige Fragen</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>Wie finde ich meine Ersti-Gruppe?</h3>
+          <p>Wähle oben deine Uni aus der Liste oder nutze die Suche. Auf der Uni-Seite siehst du alle hinterlegten WhatsApp-Gruppen nach Studiengang.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Ist %(name)s kostenlos?</h3>
+          <p>Ja, komplett kostenlos – sowohl das Beitreten zu einer Gruppe als auch das Einreichen eines Links.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Meine Uni oder mein Studiengang fehlt, was jetzt?</h3>
+          <p>Über „Link einreichen“ kannst du eine WhatsApp-Gruppe hinzufügen. Hast du noch keinen Link? Melde den Bedarf über „Gruppe vermisst“ – wir fragen bei der Fachschaft nach.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Sind die Gruppen offiziell von der Uni?</h3>
+          <p>Nein. %(name)s ist ein unabhängiges Verzeichnis. Die Gruppen werden von Studierenden oder Fachschaften betrieben, nicht von den Hochschulen selbst.</p>
+        </div>
+      </div>
+    </section>
   </div>
 """ % {"name": E(cfg["siteName"]), "sem": E(cfg["semester"]),
        "n": len(unis), "g": total_groups, "l": len(laender),
@@ -314,15 +358,35 @@ def build():
     site, name = cfg["siteUrl"], cfg["siteName"]
 
     # ---- Startseite ----
+    home_faq = [
+        ("Wie finde ich meine Ersti-Gruppe?",
+         "Wähle deine Uni aus der Liste oder nutze die Suche. Auf der Uni-Seite stehen alle "
+         "hinterlegten WhatsApp-Gruppen nach Studiengang."),
+        ("Ist %s kostenlos?" % name,
+         "Ja, komplett kostenlos – sowohl das Beitreten zu einer Gruppe als auch das Einreichen eines Links."),
+        ("Meine Uni oder mein Studiengang fehlt, was jetzt?",
+         "Über „Link einreichen“ kannst du eine WhatsApp-Gruppe hinzufügen. Hast du noch keinen Link? "
+         "Melde den Bedarf über „Gruppe vermisst“ – wir fragen bei der Fachschaft nach."),
+        ("Sind die Gruppen offiziell von der Uni?",
+         "Nein. %s ist ein unabhängiges Verzeichnis. Die Gruppen werden von Studierenden oder "
+         "Fachschaften betrieben, nicht von den Hochschulen selbst." % name),
+    ]
     write("index.html", page(cfg,
-        title="%s – Ersti-Gruppen für deinen Studiengang finden" % name,
-        description="%s bündelt die Ersti-Gruppen von %d Universitäten und Hochschulen in Deutschland – "
-                    "nach Uni und Studiengang sortiert. Finde deine Gruppe zum Semesterstart."
+        title="%s – WhatsApp-Gruppen für Erstsemester finden" % name,
+        description="Finde die WhatsApp-Gruppe deiner Uni für Erstsemester. %s bündelt Ersti-Gruppen "
+                    "von %d Hochschulen in Deutschland – nach Uni und Studiengang sortiert."
                     % (name, len(unis)),
         path="", body=home_body(cfg, unis),
-        jsonld={"@context": "https://schema.org", "@type": "WebSite",
-                "name": name, "url": site + "/", "inLanguage": "de-DE",
-                "description": "Verzeichnis der Ersti-Gruppen deutscher Hochschulen."}))
+        jsonld=[
+            {"@context": "https://schema.org", "@type": "WebSite",
+             "name": name, "url": site + "/", "inLanguage": "de-DE",
+             "description": "Verzeichnis von WhatsApp-Ersti-Gruppen deutscher Hochschulen."},
+            {"@context": "https://schema.org", "@type": "FAQPage",
+             "mainEntity": [
+                 {"@type": "Question", "name": q,
+                  "acceptedAnswer": {"@type": "Answer", "text": a}}
+                 for q, a in home_faq]},
+        ]))
 
     # ---- Uni-Seiten ----
     for u in unis:
