@@ -25,6 +25,7 @@ Aufruf
 Keine externen Abhängigkeiten.
 """
 
+import base64
 import getpass
 import hashlib
 import html as htmlmod
@@ -42,6 +43,7 @@ STATIC = ["og.png", "favicon.png", "apple-touch-icon.png",
           "robots.txt", "_redirects", "_headers", "netlify.toml", "CNAME"]
 
 E = lambda s: htmlmod.escape(str(s if s is not None else ""), quote=True)
+b64 = lambda s: base64.b64encode(str(s or "").encode("utf-8")).decode("ascii")
 
 
 # --------------------------------------------------------------------------
@@ -88,6 +90,27 @@ def parse_unis(data_js):
     body = data_js[data_js.index("["):data_js.rindex("]") + 1]
     body = re.sub(r"(\{|,)(\w+):", r'\1"\2":', body)
     return json.loads(body)
+
+
+def public_data_js(unis):
+    """Baut assets/data.js frisch aus den geparsten Objekten – nicht als
+    Kopie der Quelle. Gruppenlinks werden dabei Base64-kodiert, damit sie in
+    der ausgelieferten Datei nicht als Klartext-URL herausgreifbar sind (siehe
+    Kommentar bei uni_body). Admin und Excel-Import bleiben unberührt: dort
+    wird weiterhin mit normalen Links gearbeitet, die Kodierung passiert erst
+    hier, beim Bau der öffentlichen Datei."""
+    public = []
+    for u in unis:
+        u2 = dict(u)
+        groups = []
+        for g in (u.get("groups") or []):
+            g2 = dict(g)
+            url = (g2.get("url") or "").strip()
+            g2["url"] = b64(url) if re.match(r"^https?://", url, re.I) else ""
+            groups.append(g2)
+        u2["groups"] = groups
+        public.append(u2)
+    return "const SEED_UNIS = " + json.dumps(public, ensure_ascii=False, separators=(",", ":")) + ";\n"
 
 
 # --------------------------------------------------------------------------
@@ -275,7 +298,13 @@ def uni_body(cfg, u):
         for g in grp:
             url = (g.get("url") or "").strip()
             safe = url if re.match(r"^https?://", url, re.I) else ""
-            btn = ('<a class="btn btn-wa btn-sm" href="%s" target="_blank" rel="noopener noreferrer nofollow">Gruppe beitreten</a>' % E(safe)) \
+            # Der echte Link steht bewusst nicht als href im ausgelieferten HTML –
+            # sonst liest ein simpler Scraper (curl + Regex) ihn direkt aus dem
+            # Quelltext, ohne die Seite je im Browser zu öffnen. Stattdessen liegt
+            # er Base64-kodiert in einem data-Attribut; JS löst ihn erst beim Klick
+            # auf. Kein Schutz gegen einen Scraper, der selbst JavaScript ausführt –
+            # aber gegen die weit verbreiteten einfachen Crawler.
+            btn = ('<button class="btn btn-wa btn-sm" type="button" data-wa="%s">Gruppe beitreten</button>' % E(b64(safe))) \
                   if safe else '<span class="btn btn-ghost btn-sm">Link folgt</span>'
             note = '<div class="note">%s</div>' % E(g["note"]) if g.get("note") else ""
             items.append('<li class="group-item"><div class="info">'
@@ -352,7 +381,7 @@ def build():
     os.makedirs(DIST, exist_ok=True)
 
     write("assets/style.css", css.strip() + "\n")
-    write("assets/data.js", data_js + "\n")
+    write("assets/data.js", public_data_js(unis))
     write("assets/app.js", app_js.strip() + "\n")
 
     site, name = cfg["siteUrl"], cfg["siteName"]
@@ -605,6 +634,13 @@ VERBOTEN = [
     ("STATUS =",                "Outreach-Status"),
 ]
 
+# Domains, unter denen Gruppen-Einladungslinks laufen. Nach der Base64-
+# Kodierung in public_data_js() darf keine davon noch im Klartext in dist/
+# auftauchen – täte sie es doch, wäre die Verschleierung wirkungslos.
+VERBOTENE_LINKS = [
+    "chat.whatsapp.com/", "t.me/", "discord.gg/", "signal.group/",
+]
+
 
 def guard():
     """Bricht ab, wenn etwas in dist/ landet, das dort nicht hingehört."""
@@ -619,6 +655,15 @@ def guard():
                 if needle in text:
                     treffer.append("%s enthält %s (%s)"
                                    % (os.path.relpath(path, DIST), was, needle))
+            # Nur in den Uni-Seiten und in data.js prüfen – dort landet der
+            # echte Link. app.js darf die Domainnamen weiterhin nennen (z. B.
+            # als Platzhaltertext im Formular), das ist kein Leck.
+            rel = os.path.relpath(path, DIST)
+            if rel.startswith("uni" + os.sep) or rel == os.path.join("assets", "data.js"):
+                for needle in VERBOTENE_LINKS:
+                    if needle in text:
+                        treffer.append("%s enthält einen Klartext-Gruppenlink (%s) – "
+                                        "Base64-Kodierung hat nicht gegriffen" % (rel, needle))
     if os.path.exists(os.path.join(DIST, "admin.html")):
         treffer.append("dist/admin.html existiert")
 

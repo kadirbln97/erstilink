@@ -289,6 +289,9 @@ main{padding-bottom:70px}
 .field .hint{font-size:12.5px;color:var(--ink-3);margin-top:5px}
 .field textarea{min-height:78px;resize:vertical}
 .row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* Spam-Falle: für Menschen unsichtbar (nicht display:none, das erkennen manche
+   Bots), für automatisch ausfüllende Skripte aber ein ganz normales Feld. */
+.hp{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden}
 
 /* ============================================================
    ADMIN
@@ -729,6 +732,17 @@ function safeUrl(u){
   const s = String(u || "").trim();
   return /^https?:\/\//i.test(s) ? s : null;
 }
+/* Gruppenlinks liegen im ausgelieferten data.js Base64-kodiert, damit ein
+   simpler Scraper (curl + Regex über die Rohdatei) sie nicht einfach ausliest.
+   Lokal in der Verwaltung sind es weiterhin normale Klartext-URLs – deshalb
+   probiert resolveUrl() erst den Wert direkt, dann dekodiert. */
+function b64dec(s){
+  try{ return decodeURIComponent(escape(atob(String(s || "")))); }
+  catch(e){ return ""; }
+}
+function resolveUrl(raw){
+  return safeUrl(raw) || safeUrl(b64dec(raw));
+}
 function totalGroups(){ return DATA.reduce((n,u) => n + (u.groups ? u.groups.length : 0), 0); }
 function countries(){ return [...new Set(DATA.map(u => u.country).filter(Boolean))]; }
 function laender(){ return [...new Set(DATA.map(u => u.land).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"de")); }
@@ -1032,14 +1046,14 @@ function renderDetail(id){
     ${groups.length ? `
       <ul class="group-list">
         ${groups.map(g => {
-          const url = safeUrl(g.url);
+          const has = !!resolveUrl(g.url);
           return `<li class="group-item">
             <div class="info">
               <div class="title">${esc(g.name)}</div>
               ${g.note ? `<div class="note">${esc(g.note)}</div>` : ""}
             </div>
-            ${url
-              ? `<a class="btn btn-wa btn-sm" href="${esc(url)}" target="_blank" rel="noopener noreferrer nofollow">${ICON_WA} Gruppe beitreten</a>`
+            ${has
+              ? `<button class="btn btn-wa btn-sm" type="button" data-wa="${esc(g.url)}">${ICON_WA} Gruppe beitreten</button>`
               : `<span class="btn btn-ghost btn-sm" aria-disabled="true">Link folgt</span>`}
           </li>`;
         }).join("")}
@@ -1129,6 +1143,10 @@ function openSubmit(preUni, mode){
         <textarea id="sNote" placeholder="optional"></textarea>
       </div>
       <input type="hidden" id="sSem" value="${esc(CONFIG.semester)}">
+      <div class="hp" aria-hidden="true">
+        <label for="sWebsite">Website</label>
+        <input id="sWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
     </form>
     <div class="modal-foot">
       <button class="btn btn-ghost" data-close>Abbrechen</button>
@@ -1137,6 +1155,11 @@ function openSubmit(preUni, mode){
 
   const root = document.getElementById("modalRoot");
   const el = id => document.getElementById(id);
+
+  // Bot-Schutz: ein Formular, das schneller als in 2,5 Sekunden abgeschickt wird,
+  // oder bei dem das für Menschen unsichtbare "Website"-Feld ausgefüllt ist,
+  // stammt so gut wie sicher von einem Skript, nicht von einer Person.
+  const openedAt = Date.now();
 
   function applyMode(m){
     mode = m;
@@ -1164,6 +1187,10 @@ function openSubmit(preUni, mode){
     e.preventDefault();
     const v = id => (el(id).value || "").trim();
     const isLink = mode === "link";
+
+    // Stilles Blockieren statt Fehlermeldung: Ein Bot soll nicht lernen, woran
+    // er erkannt wurde. Für Menschen ändert sich nichts, die Felder sind unsichtbar.
+    if(v("sWebsite") || Date.now() - openedAt < 2500) return;
 
     const subject = (isLink ? "[LINK] " : "[BEDARF] ") + v("sUni") + " – " + v("sCourse");
     const body = [
@@ -1746,9 +1773,10 @@ function renderLegal(which){
     Telefonnummer oder deinen Benutzernamen.</p>
 
     <h2>7. Hosting</h2>
-    <p>Diese Website wird bei einem externen Dienstleister gehostet. Mit diesem besteht ein Vertrag
-    zur Auftragsverarbeitung nach Art. 28 DSGVO. Eine Weitergabe von Daten zu anderen Zwecken,
-    insbesondere zu Werbezwecken an Dritte, findet nicht statt.</p>
+    <p>Diese Website wird bei Netlify, Inc., 101 2nd Street, San Francisco, CA 94105, USA,
+    gehostet. Mit diesem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.
+    Eine Weitergabe von Daten zu anderen Zwecken, insbesondere zu Werbezwecken an Dritte, findet
+    nicht statt.</p>
 
     <h2>8. Datenübermittlung in Drittländer</h2>
     <p>Soweit unser Hosting-Anbieter Daten außerhalb der EU verarbeitet, erfolgt dies auf Grundlage
@@ -1828,6 +1856,14 @@ if(submitBtn) submitBtn.addEventListener("click", () => openSubmit("", "link"));
 document.addEventListener("click", e => {
   const t = e.target.closest("[data-open-submit]");
   if(t) openSubmit(t.dataset.uni || "", t.dataset.mode || "link");
+});
+// Gruppenlink erst im Klickmoment auflösen und öffnen – nicht als href im
+// Quelltext hinterlegen, siehe resolveUrl() weiter oben.
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-wa]");
+  if(!t) return;
+  const url = resolveUrl(t.dataset.wa);
+  if(url) window.open(url, "_blank", "noopener,noreferrer");
 });
 // Interne Links selbst behandeln, statt die Seite neu zu laden
 document.addEventListener("click", e => {

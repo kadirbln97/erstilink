@@ -29,6 +29,34 @@
   status = 301
   force = true
 
+# Rate-Limiting gegen Massen-Traffic (Bots, Scraper, DDoS-artige Lastspitzen).
+# Zusätzlich zu Netlifys eingebautem, automatischem DDoS-Schutz – zwei eigene
+# Regeln sind auf jedem Plan kostenlos möglich, mehr erlaubt der freie Plan
+# nicht. "ip"+"domain" zusammen ist die einzige auf dem Free-Plan verfügbare
+# Zählweise (nur "domain" ist Enterprise).
+#
+# 1) Ganze Seite: harte Grenze gegen Flooding, weit über normalem Verhalten.
+[[redirects]]
+  from = "/*"
+  to = "/:splat"
+  status = 200
+  [redirects.rate_limit]
+    window_limit = 300
+    window_size = 60
+    aggregate_by = ["ip", "domain"]
+
+# 2) Uni-Seiten gezielt enger: Dort stehen die Gruppenlinks. 60 Aufrufe pro
+# Minute erlaubt zügiges echtes Durchklicken, blockiert aber ein Skript, das
+# planmäßig alle 214 Seiten in kurzer Zeit abgrast.
+[[redirects]]
+  from = "/uni/*"
+  to = "/uni/:splat"
+  status = 200
+  [redirects.rate_limit]
+    window_limit = 60
+    window_size = 60
+    aggregate_by = ["ip", "domain"]
+
 [[headers]]
   for = "/*"
   [headers.values]
