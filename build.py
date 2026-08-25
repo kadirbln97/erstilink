@@ -145,7 +145,7 @@ def page(cfg, *, title, description, path, body, jsonld=None, noindex=False):
         '<meta name="twitter:title" content="%s">' % E(title),
         '<meta name="twitter:description" content="%s">' % E(description),
         '<meta name="twitter:image" content="%s/og.png">' % E(cfg["siteUrl"]),
-        '<meta name="theme-color" content="#4f46e5">',
+        '<meta name="theme-color" content="#075e54">',
         '<link rel="icon" type="image/png" href="/favicon.png">',
         '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
         '<link rel="stylesheet" href="/assets/style.css">',
