@@ -105,15 +105,15 @@ button{font-family:inherit}
    ============================================================ */
 .hero{
   position:relative;overflow:hidden;color:#fff;
-  background:radial-gradient(1000px 500px at 15% -10%,#6d5cf6 0%,transparent 60%),
-             radial-gradient(800px 500px at 90% 0%,#a855f7 0%,transparent 55%),
-             linear-gradient(160deg,#191840 0%,#0e0d24 100%);
+  background:radial-gradient(1000px 500px at 15% -10%,#1fbb5a 0%,transparent 60%),
+             radial-gradient(800px 500px at 90% 0%,#25d366 0%,transparent 55%),
+             linear-gradient(160deg,#0a2e1c 0%,#071711 100%);
 }
 .hero .wrap{padding-top:64px;padding-bottom:52px}
 .badge{
   display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;
   padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.18);color:#e5e2ff;letter-spacing:.01em;
+  border:1px solid rgba(255,255,255,.18);color:#dcfce8;letter-spacing:.01em;
 }
 .dot{
   position:relative;width:6px;height:6px;border-radius:50%;background:var(--wa);
@@ -130,17 +130,17 @@ button{font-family:inherit}
 @media (prefers-reduced-motion:reduce){
   .dot::after{animation:none;display:none}
 }
-.hero .kicker{margin:16px 0 0;font-size:14.5px;font-weight:600;color:#a9a5d4;letter-spacing:-.005em}
+.hero .kicker{margin:16px 0 0;font-size:14.5px;font-weight:600;color:#9fdcb8;letter-spacing:-.005em}
 .hero h1{
   margin:10px 0 0;font-size:clamp(30px,5.4vw,52px);line-height:1.08;
   letter-spacing:-.033em;font-weight:800;max-width:16ch;
 }
 .hero h1 em{font-style:normal;background:linear-gradient(90deg,#7dffb0,#4ade80);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.lead{margin:18px 0 0;max-width:60ch;color:#c6c3e8;font-size:clamp(15px,2vw,17.5px)}
+.hero p.lead{margin:18px 0 0;max-width:60ch;color:#cdeedb;font-size:clamp(15px,2vw,17.5px)}
 .hero-steps{
   list-style:none;margin:26px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px 22px;counter-reset:step;
 }
-.hero-steps li{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:650;color:#e5e2ff}
+.hero-steps li{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:650;color:#e3faec}
 .hero-steps span{
   display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
   background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);font-size:12px;font-weight:800;flex-shrink:0;
@@ -150,9 +150,9 @@ button{font-family:inherit}
   list-style:none;margin:22px 0 0;padding:13px 18px;display:flex;flex-wrap:wrap;gap:9px 22px;
   background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-sm);
 }
-.trust-bar li{font-size:13px;font-weight:600;color:#d8d5f2;display:flex;align-items:center;gap:7px}
+.trust-bar li{font-size:13px;font-weight:600;color:#dff5e6;display:flex;align-items:center;gap:7px}
 .stat b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em}
-.stat span{font-size:12.5px;color:#a9a5d4;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.stat span{font-size:12.5px;color:#9fdcb8;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
 
 /* ============================================================
    SEARCH
@@ -245,11 +245,11 @@ main{padding-bottom:70px}
    ============================================================ */
 .cta{
   margin-top:52px;padding:30px;border-radius:18px;
-  background:linear-gradient(135deg,#1c1b3f,#2b2660);color:#fff;
+  background:linear-gradient(135deg,#0f3a24,#155c34);color:#fff;
   display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;
 }
 .cta h3{margin:0 0 5px;font-size:20px;letter-spacing:-.025em}
-.cta p{margin:0;color:#bdb9e6;font-size:14.5px;max-width:52ch}
+.cta p{margin:0;color:#bfe9cf;font-size:14.5px;max-width:52ch}
 /* Ghost-Button auf dunklem Grund: transparent+dunkler Text war auf dem
    Verlauf kaum lesbar. Deckende helle Füllung + weißer Text lösen das. */
 .cta .btn-ghost{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.4)}
@@ -2167,7 +2167,7 @@ function renderTransparenz(){
 }
 
 function renderStarterkit(){
-  document.title = "Starterkit fürs erste Semester – " + CONFIG.siteName;
+  document.title = "Starterkit: Checkliste für den Studienstart – " + CONFIG.siteName;
   setMeta("robots", "index, follow");
   setCanonical(CONFIG.siteUrl + "/starterkit");
 
@@ -2175,10 +2175,10 @@ function renderStarterkit(){
     <section class="page-hero">
       <div class="wrap">
         <span class="eyebrow">🎒 Starterkit</span>
-        <h1>Gut vorbereitet ins erste Semester</h1>
-        <p class="lead">Neben deiner Ersti-Gruppe gibt es ein paar Dinge, die sich vor dem
-        Semesterstart lohnen. Eine Auswahl — inklusive einem Angebot, bei dem wir offenlegen,
-        dass es sich um Werbung handelt.</p>
+        <h1>Startklar für den Studienbeginn</h1>
+        <p class="lead">Ein paar Dinge lassen sich schon vor dem ersten Tag erledigen, statt sie
+        in der Erstiwoche nachzuholen. Dazu gehört auch ein Angebot mit Provision für uns —
+        das kennzeichnen wir hier klar als Werbung.</p>
       </div>
     </section>
 
@@ -2187,31 +2187,31 @@ function renderStarterkit(){
         <div>
           <span class="ad-badge">📢 Werbung</span>
           <h3>Amazon Prime Student</h3>
-          <p>6 Monate Prime kostenlos testen, danach vergünstigt weiter — u. a. schnellerer
-          Versand für Uni-Material und Prime Video/Music. Nur für Studierende mit gültiger
-          Immatrikulation.</p>
-          <p class="fine">Affiliate-Link · kein Mehrpreis für dich · mehr dazu im
+          <p>Sechs Monate Prime gratis, danach zum reduzierten Studierendentarif weiter —
+          praktisch für Versand von Uni-Material sowie Video und Musik nebenbei. Voraussetzung
+          ist eine gültige Immatrikulation.</p>
+          <p class="fine">Affiliate-Link · kein Aufpreis für dich · Details im
           <a href="${LINK("transparenz")}">Transparenzhinweis</a></p>
         </div>
         <a class="btn btn-primary" href="https://amzn.to/4c79cO1" target="_blank" rel="sponsored noopener noreferrer">Prime Student ansehen</a>
       </div>
 
       <section class="faq" aria-labelledby="starterHeading">
-        <h2 id="starterHeading">Checkliste fürs erste Semester</h2>
+        <h2 id="starterHeading">Checkliste für den Studienstart</h2>
         <ul class="checklist">
-          <li>Immatrikulation abgeschlossen und Studierendenausweis abgeholt oder beantragt</li>
-          <li>Semesterticket bzw. Deutschlandticket-Anspruch geklärt</li>
-          <li>Zugang zum Uni-Mailpostfach und zur Lernplattform eingerichtet</li>
-          <li>Deiner <a href="${LINK("")}">Ersti-Gruppe</a> beigetreten und erste Fragen gestellt</li>
-          <li>Stundenplan bzw. Modulwahl für das erste Semester geprüft</li>
-          <li>Bei Bedarf: BAföG-Antrag frühzeitig gestellt</li>
+          <li>Immatrikulationsbescheinigung da, Studierendenausweis abgeholt oder beantragt</li>
+          <li>Anspruch auf Semesterticket bzw. Deutschlandticket geprüft</li>
+          <li>Uni-Mailadresse und Zugang zur Lernplattform freigeschaltet</li>
+          <li>In deiner <a href="${LINK("")}">Ersti-Gruppe</a> vorgestellt und erste Kontakte geknüpft</li>
+          <li>Vorlesungsverzeichnis angeschaut und Module fürs erste Semester gewählt</li>
+          <li>BAföG-Antrag frühzeitig gestellt, falls relevant</li>
         </ul>
       </section>
     </div>`;
 }
 
 function renderFachschaften(){
-  document.title = "Für Fachschaften – " + CONFIG.siteName;
+  document.title = "Für Fachschaften: Eure Gruppe im Verzeichnis – " + CONFIG.siteName;
   setMeta("robots", "index, follow");
   setCanonical(CONFIG.siteUrl + "/fachschaften");
 
@@ -2222,11 +2222,11 @@ function renderFachschaften(){
     <section class="page-hero">
       <div class="wrap">
         <span class="eyebrow">🤝 Für Fachschaften</span>
-        <h1>Eure Erstis schneller in die richtige Gruppe bringen</h1>
-        <p class="lead">${esc(CONFIG.siteName)} sammelt WhatsApp-Gruppen für Erstsemester nach
-        Hochschule und Studiengang. Wenn ihr eure offizielle Gruppe bei uns hinterlegt, finden
-        neue Studierende sie leichter — ganz ohne Aufwand für eure Fachschaft.</p>
-        <a class="btn btn-primary" href="${esc(mailHref)}">Gruppe hinterlegen lassen</a>
+        <h1>Eure WhatsApp-Gruppe dort, wo Erstis zuerst suchen</h1>
+        <p class="lead">${esc(CONFIG.siteName)} ist ein Verzeichnis von Ersti-Gruppen, sortiert nach
+        Hochschule und Studiengang. Trägt eure Fachschaft ihre offizielle Gruppe bei uns ein,
+        landen Neuankömmlinge direkt dort — ohne dass ihr etwas pflegen oder bezahlen müsst.</p>
+        <a class="btn btn-primary" href="${esc(mailHref)}">Gruppe eintragen lassen</a>
       </div>
     </section>
 
@@ -2234,39 +2234,39 @@ function renderFachschaften(){
       <div class="benefit-grid">
         <div class="benefit-item">
           <div class="ic">🏷️</div>
-          <h3>Offiziell gekennzeichnet</h3>
-          <p>Eure Gruppe wird eurer Hochschule und eurem Studiengang zugeordnet, damit Erstis
-          direkt die richtige finden — ohne Verwechslung mit inoffiziellen Gruppen.</p>
+          <h3>Klar als eure Gruppe erkennbar</h3>
+          <p>Der Eintrag ist eindeutig eurer Hochschule und eurem Studiengang zugeordnet — Erstis
+          verwechseln ihn nicht mit einer inoffiziellen Gruppe von Drittanbietern.</p>
         </div>
         <div class="benefit-item">
           <div class="ic">🔗</div>
-          <h3>Ein Link, den ihr überall teilen könnt</h3>
-          <p>Ihr bekommt eine feste Adresse auf ${esc(CONFIG.siteName)}, die ihr in eurer
-          eigenen Erstiwoche-Kommunikation, auf Flyern oder eurer Fachschaftsseite verlinken könnt.</p>
+          <h3>Eine dauerhafte Adresse zum Teilen</h3>
+          <p>Ihr erhaltet eine feste URL auf ${esc(CONFIG.siteName)} für Flyer, eure
+          Fachschaftsseite oder die Begrüßungsmail an Studienanfänger.</p>
         </div>
         <div class="benefit-item">
           <div class="ic">📅</div>
-          <h3>Erreicht Erstis vor Semesterstart</h3>
-          <p>Studierende suchen ihre Gruppe oft schon Wochen vor dem ersten Vorlesungstag — genau
-          dann, wenn ${esc(CONFIG.siteName)} gefunden wird.</p>
+          <h3>Sichtbar schon vor dem Semesterstart</h3>
+          <p>Viele suchen ihre Gruppe bereits Wochen vor Vorlesungsbeginn — genau in dieser Phase
+          wird ${esc(CONFIG.siteName)} gefunden.</p>
         </div>
         <div class="benefit-item">
           <div class="ic">🆓</div>
-          <h3>Kostenlos und ohne Aufwand</h3>
-          <p>Ihr schickt uns den Link, wir prüfen und veröffentlichen ihn. Keine Anmeldung, keine
-          Pflege, keine Kosten für eure Fachschaft.</p>
+          <h3>Ohne Kosten, ohne laufenden Aufwand</h3>
+          <p>Link schicken, wir prüfen und veröffentlichen. Es gibt keine Anmeldung und keine
+          Gebühr für eure Fachschaft.</p>
         </div>
       </div>
 
       <section class="faq" aria-labelledby="fsHeading">
-        <h2 id="fsHeading">So funktioniert's</h2>
+        <h2 id="fsHeading">Ablauf in drei Schritten</h2>
         <ol class="steps-numbered">
-          <li><span class="n">1</span><div><b>Link schicken</b><span> — per Mail oder über unser
-          <a href="${LINK("")}">Einreichungsformular</a> auf der Startseite.</span></div></li>
-          <li><span class="n">2</span><div><b>Wir prüfen kurz</b><span> — ob die Gruppe zu eurer
-          Hochschule passt und noch aktiv ist.</span></div></li>
-          <li><span class="n">3</span><div><b>Veröffentlichung</b><span> — meist innerhalb weniger
-          Tage, ihr bekommt eine kurze Bestätigung.</span></div></li>
+          <li><span class="n">1</span><div><b>Gruppenlink schicken</b><span> — per Mail oder über
+          unser <a href="${LINK("")}">Einreichungsformular</a> auf der Startseite.</span></div></li>
+          <li><span class="n">2</span><div><b>Kurzer Check unsererseits</b><span> — passt die Gruppe
+          zur genannten Hochschule und ist sie noch aktiv?</span></div></li>
+          <li><span class="n">3</span><div><b>Eintrag geht online</b><span> — meist innerhalb
+          weniger Tage, mit kurzer Rückmeldung an euch.</span></div></li>
         </ol>
       </section>
 

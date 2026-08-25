@@ -478,10 +478,10 @@ def build():
 
     # ---- Inhaltsseiten (Starterkit, Für Fachschaften) – indexierbar ----
     for slug, titel, beschreibung in (
-        ("starterkit", "Starterkit fürs erste Semester",
-         "Checkliste und Angebote für den Start ins erste Semester."),
-        ("fachschaften", "Für Fachschaften",
-         "So hinterlegt eure Fachschaft die offizielle Ersti-Gruppe bei %s." % name),
+        ("starterkit", "Startklar für den Studienbeginn",
+         "Checkliste für den Studienstart und ein Angebot für Studierende – klar als Werbung gekennzeichnet."),
+        ("fachschaften", "Eure WhatsApp-Gruppe dort, wo Erstis zuerst suchen",
+         "So landet die offizielle Ersti-Gruppe eurer Fachschaft im Verzeichnis von %s." % name),
     ):
         write("%s/index.html" % slug, page(cfg,
             title="%s – %s" % (titel, name),
