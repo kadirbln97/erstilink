@@ -163,6 +163,10 @@ def page(cfg, *, title, description, path, body, jsonld=None, noindex=False):
 <header class="site-head">
   <div class="wrap">
     <a class="logo" href="/"><span class="logo-mark">🎓</span> %(name)s</a>
+    <nav class="head-nav">
+      <a href="/fachschaften">Für Fachschaften</a>
+      <a href="/starterkit">Starterkit</a>
+    </nav>
     <div class="head-actions">
       <button class="btn btn-primary btn-sm" id="btnSubmit">Gruppe einreichen</button>
     </div>
@@ -177,6 +181,8 @@ def page(cfg, *, title, description, path, body, jsonld=None, noindex=False):
     <nav>
       <a href="/impressum">Impressum</a>
       <a href="/datenschutz">Datenschutz</a>
+      <a href="/transparenz">Transparenz</a>
+      <button class="link-btn" id="btnReport">Person melden</button>
     </nav>
   </div>
 </footer>
@@ -196,6 +202,7 @@ def page(cfg, *, title, description, path, body, jsonld=None, noindex=False):
   <input type="text" name="studiengang">
   <input type="text" name="link">
   <input type="text" name="semester">
+  <input type="text" name="gruppe">
   <input type="text" name="name">
   <input type="email" name="email">
   <textarea name="anmerkung"></textarea>
@@ -277,9 +284,9 @@ def home_body(cfg, unis):
         <h3>Deine Gruppe fehlt?</h3>
         <p>Füge deine Ersti- oder Studiengangsgruppe kostenlos hinzu.</p>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div class="cta-actions">
         <button class="btn btn-wa" data-open-submit>Link einreichen</button>
-        <button class="btn btn-ghost" data-open-submit data-mode="demand" style="color:#dcd9f5;border-color:rgba(255,255,255,.25)">Gruppe vermisst</button>
+        <button class="btn btn-ghost" data-open-submit data-mode="demand">Gruppe vermisst</button>
       </div>
     </div>
 
@@ -356,10 +363,9 @@ def uni_body(cfg, u):
         <h3>Dein Studiengang fehlt?</h3>
         <p>Link vorhanden? Wir hängen ihn unter %(name)s. Noch keine Gruppe? Melde den Bedarf.</p>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div class="cta-actions">
         <button class="btn btn-wa" data-open-submit data-uni="%(name)s">Link einreichen</button>
-        <button class="btn btn-ghost" data-open-submit data-mode="demand" data-uni="%(name)s"
-                style="color:#dcd9f5;border-color:rgba(255,255,255,.25)">Gruppe vermisst</button>
+        <button class="btn btn-ghost" data-open-submit data-mode="demand" data-uni="%(name)s">Gruppe vermisst</button>
       </div>
     </div>
   </div>
@@ -461,7 +467,8 @@ def build():
                          "item": "%s/uni/%s" % (site, u["id"])}]}}))
 
     # ---- Rechtsseiten und Admin ----
-    for slug, titel in (("impressum", "Impressum"), ("datenschutz", "Datenschutzerklärung")):
+    for slug, titel in (("impressum", "Impressum"), ("datenschutz", "Datenschutzerklärung"),
+                        ("transparenz", "Transparenzhinweis")):
         write("%s/index.html" % slug, page(cfg,
             title="%s – %s" % (titel, name),
             description="%s von %s." % (titel, name),
@@ -469,12 +476,26 @@ def build():
             body='<div class="wrap"><article class="legal"><h1>%s</h1>'
                  '<p>Wird geladen …</p></article></div>' % E(titel)))
 
+    # ---- Inhaltsseiten (Starterkit, Für Fachschaften) – indexierbar ----
+    for slug, titel, beschreibung in (
+        ("starterkit", "Starterkit fürs erste Semester",
+         "Checkliste und Angebote für den Start ins erste Semester."),
+        ("fachschaften", "Für Fachschaften",
+         "So hinterlegt eure Fachschaft die offizielle Ersti-Gruppe bei %s." % name),
+    ):
+        write("%s/index.html" % slug, page(cfg,
+            title="%s – %s" % (titel, name),
+            description=beschreibung,
+            path=slug,
+            body='<div class="wrap"><section class="page-hero"><h1>%s</h1>'
+                 '<p class="lead">Wird geladen …</p></section></div>' % E(titel)))
+
     write("404.html", page(cfg,
         title="Seite nicht gefunden – %s" % name,
         description="Diese Seite existiert nicht.",
         path="404", noindex=True,
-        body='<div class="wrap"><div class="empty" style="margin-top:60px">'
-             '<h1 style="font-size:18px;letter-spacing:-.02em;margin:0 0 6px">Diese Seite gibt es nicht</h1>'
+        body='<div class="wrap"><div class="empty empty-lg">'
+             '<h1 class="h1-tight">Diese Seite gibt es nicht</h1>'
              '<p>Vielleicht hat sich die Adresse geändert.</p>'
              '<a class="btn btn-primary" href="/">Zur Startseite</a></div></div>'))
 
@@ -483,7 +504,11 @@ def build():
     rows = ['<?xml version="1.0" encoding="UTF-8"?>',
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
             '  <url><loc>%s/</loc><lastmod>%s</lastmod><changefreq>weekly</changefreq>'
-            '<priority>1.0</priority></url>' % (site, today)]
+            '<priority>1.0</priority></url>' % (site, today),
+            '  <url><loc>%s/starterkit</loc><lastmod>%s</lastmod><changefreq>monthly</changefreq>'
+            '<priority>0.6</priority></url>' % (site, today),
+            '  <url><loc>%s/fachschaften</loc><lastmod>%s</lastmod><changefreq>monthly</changefreq>'
+            '<priority>0.6</priority></url>' % (site, today)]
     for u in unis:
         rows.append('  <url><loc>%s/uni/%s</loc><lastmod>%s</lastmod>'
                     '<changefreq>weekly</changefreq><priority>0.8</priority></url>'
@@ -501,9 +526,8 @@ def build():
                 title="Seite nicht gefunden – %s" % name,
                 description="Diese Seite existiert nicht.",
                 path=d, noindex=True,
-                body='<div class="wrap"><div class="empty" style="margin-top:60px">'
-                     '<h1 style="font-size:18px;letter-spacing:-.02em;margin:0 0 6px">'
-                     'Diese Seite gibt es nicht</h1>'
+                body='<div class="wrap"><div class="empty empty-lg">'
+                     '<h1 class="h1-tight">Diese Seite gibt es nicht</h1>'
                      '<p>Die Verwaltung läuft ausschließlich lokal.</p>'
                      '<a class="btn btn-primary" href="/">Zur Startseite</a></div></div>'))
             print("Überschrieben: dist/%s/ mit einer Fehlerseite" % d)

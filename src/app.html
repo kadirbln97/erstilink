@@ -25,21 +25,21 @@
    DESIGN TOKENS
    ============================================================ */
 :root{
-  --ink:#12122b;
-  --ink-2:#3d3d5c;
-  --ink-3:#6c6c8a;
-  --line:#e6e6f0;
-  --line-2:#f0f0f7;
-  --bg:#ffffff;
-  --bg-soft:#f8f8fc;
+  --ink:#181622;
+  --ink-2:#413d4f;
+  --ink-3:#726c80;
+  --line:#eae3d8;
+  --line-2:#f2ede2;
+  --bg:#fffdf9;
+  --bg-soft:#f8f3ea;
   --brand:#4f46e5;
   --brand-dark:#3730a3;
   --brand-soft:#eef0ff;
   --wa:#25d366;
   --wa-dark:#128c4a;
   --danger:#dc2626;
-  --radius:14px;
-  --radius-sm:10px;
+  --radius:16px;
+  --radius-sm:12px;
   --shadow-sm:0 1px 2px rgba(18,18,43,.06);
   --shadow:0 4px 20px rgba(18,18,43,.08);
   --shadow-lg:0 20px 60px rgba(18,18,43,.16);
@@ -64,10 +64,14 @@ button{font-family:inherit}
    HEADER
    ============================================================ */
 .site-head{
-  position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);
+  position:sticky;top:0;z-index:40;background:rgba(255,253,249,.88);
   backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line);
 }
 .site-head .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+.head-nav{display:flex;align-items:center;gap:22px;font-size:14px;font-weight:600;flex:1;justify-content:center}
+.head-nav a{color:var(--ink-2);text-decoration:none}
+.head-nav a:hover{color:var(--brand)}
+@media (max-width:720px){.head-nav{display:none}}
 .logo{display:inline-flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.02em;text-decoration:none;font-size:17px}
 .logo-mark{
   width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
@@ -142,6 +146,11 @@ button{font-family:inherit}
   background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);font-size:12px;font-weight:800;flex-shrink:0;
 }
 .hero-stats{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px}
+.trust-bar{
+  list-style:none;margin:22px 0 0;padding:13px 18px;display:flex;flex-wrap:wrap;gap:9px 22px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-sm);
+}
+.trust-bar li{font-size:13px;font-weight:600;color:#d8d5f2;display:flex;align-items:center;gap:7px}
 .stat b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em}
 .stat span{font-size:12.5px;color:#a9a5d4;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
 
@@ -251,6 +260,7 @@ main{padding-bottom:70px}
 .cta-actions,.empty-actions{display:flex;gap:8px;flex-wrap:wrap}
 .empty-actions{justify-content:center;margin-top:2px}
 .empty-lg{margin-top:60px}
+.h1-tight{font-size:18px;letter-spacing:-.02em;margin:0 0 6px}
 .search-bar-tight{margin-top:20px}
 .modal-toggle-wrap{padding:0 24px}
 .chip-fill{flex:1}
@@ -264,6 +274,52 @@ main{padding-bottom:70px}
 .faq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px 28px}
 .faq-item h3{margin:0 0 6px;font-size:15.5px;font-weight:700;letter-spacing:-.01em}
 .faq-item p{margin:0;color:var(--ink-3);font-size:14.5px;line-height:1.55}
+
+/* ============================================================
+   INHALTSSEITEN (Fachschaften / Starterkit)
+   ============================================================ */
+.page-hero{padding:52px 0 8px}
+.page-hero .eyebrow{
+  display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;
+  padding:6px 13px;border-radius:999px;background:var(--brand-soft);color:var(--brand-dark);letter-spacing:.01em;
+}
+.page-hero h1{margin:16px 0 0;font-size:clamp(28px,4.6vw,42px);line-height:1.1;letter-spacing:-.03em;font-weight:800;max-width:20ch}
+.page-hero p.lead{margin:16px 0 0;max-width:62ch;color:var(--ink-2);font-size:16px;line-height:1.6}
+.page-hero .btn{margin-top:24px}
+
+.benefit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:36px}
+.benefit-item{
+  padding:22px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;
+}
+.benefit-item .ic{font-size:24px;line-height:1}
+.benefit-item h3{margin:12px 0 6px;font-size:15.5px;font-weight:700;letter-spacing:-.01em}
+.benefit-item p{margin:0;color:var(--ink-3);font-size:14px;line-height:1.55}
+
+.steps-numbered{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:14px;max-width:640px}
+.steps-numbered li{display:flex;gap:14px;align-items:flex-start}
+.steps-numbered .n{
+  flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;
+}
+.steps-numbered div{padding-top:3px}
+.steps-numbered b{display:block;font-size:14.5px;font-weight:700}
+.steps-numbered span{color:var(--ink-3);font-size:14px}
+
+.ad-badge{
+  display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  padding:5px 11px;border-radius:999px;background:#fff3d6;color:#8a5a00;letter-spacing:.02em;
+}
+.starter-card{
+  margin-top:28px;padding:26px;border-radius:var(--radius);border:1px solid var(--line);
+  background:linear-gradient(135deg,#fff8ec,#fff);display:flex;flex-wrap:wrap;gap:20px;
+  align-items:center;justify-content:space-between;
+}
+.starter-card h3{margin:0 0 6px;font-size:19px;letter-spacing:-.02em}
+.starter-card p{margin:0;color:var(--ink-2);font-size:14.5px;max-width:52ch}
+.starter-card .fine{margin-top:10px;color:var(--ink-3);font-size:12.5px}
+.checklist{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px;max-width:520px}
+.checklist li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--ink-2)}
+.checklist li::before{content:"✓";color:var(--wa-dark);font-weight:800;flex-shrink:0}
 
 /* ============================================================
    DETAIL VIEW
@@ -289,6 +345,8 @@ main{padding-bottom:70px}
 .group-item .info{min-width:0}
 .group-item .title{font-weight:650;font-size:15.5px;letter-spacing:-.012em}
 .group-item .note{font-size:13px;color:var(--ink-3);margin-top:2px}
+.group-actions{display:flex;align-items:center;gap:12px}
+.link-btn-sm{font-size:12.5px}
 
 /* ============================================================
    MODAL
@@ -377,6 +435,11 @@ main{padding-bottom:70px}
 .site-foot .wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--ink-2)}
 .site-foot a{color:var(--ink-2);text-decoration:none;margin-left:16px}
 .site-foot a:hover{color:var(--brand)}
+.link-btn{
+  border:0;background:transparent;padding:0;margin-left:16px;cursor:pointer;
+  font:inherit;font-size:13.5px;color:var(--ink-2);text-decoration:none;
+}
+.link-btn:hover{color:var(--brand)}
 
 .legal{max-width:760px;margin-top:30px}
 .legal h1{font-size:28px;letter-spacing:-.03em;margin:0 0 6px}
@@ -416,6 +479,10 @@ main{padding-bottom:70px}
 <header class="site-head">
   <div class="wrap">
     <a class="logo" href="/"><span class="logo-mark">🎓</span> ErstiLink</a>
+    <nav class="head-nav">
+      <a href="/fachschaften">Für Fachschaften</a>
+      <a href="/starterkit">Starterkit</a>
+    </nav>
     <div class="head-actions">
       <button class="btn btn-ghost btn-sm" id="btnSubmit">Gruppe einreichen</button>
     </div>
@@ -430,6 +497,8 @@ main{padding-bottom:70px}
     <nav>
       <a href="/impressum">Impressum</a>
       <a href="/datenschutz">Datenschutz</a>
+      <a href="/transparenz">Transparenz</a>
+      <button class="link-btn" id="btnReport">Person melden</button>
     </nav>
   </div>
 </footer>
@@ -854,6 +923,9 @@ function route(){
   if(parts[0] === "admin")           return window.ADMIN_UI ? window.ADMIN_UI() : renderNotFound();
   if(parts[0] === "impressum")       return renderLegal("impressum");
   if(parts[0] === "datenschutz")     return renderLegal("datenschutz");
+  if(parts[0] === "transparenz")     return renderTransparenz();
+  if(parts[0] === "starterkit")      return renderStarterkit();
+  if(parts[0] === "fachschaften")    return renderFachschaften();
   if(parts.length)                   return renderNotFound();
   return renderHome();
 }
@@ -944,6 +1016,12 @@ function renderHome(){
         <div class="stat"><b>${totalGroups()}</b><span>Gruppen</span></div>
         <div class="stat"><b>${multi ? countries().length : laender().length}</b><span>${multi ? "Länder" : "Bundesländer"}</span></div>
       </div>
+      <ul class="trust-bar">
+        <li>🎓 Von Studierenden für Studierende</li>
+        <li>📅 Am Start seit 2024</li>
+        <li>🏫 Alle ${DATA.length} Hochschulen Deutschlands gelistet</li>
+        <li>✅ Jede Gruppe wird vor Veröffentlichung geprüft</li>
+      </ul>
     </div>
   </section>
 
@@ -1092,9 +1170,12 @@ function renderDetail(id){
               <div class="title">${esc(g.name)}</div>
               ${g.note ? `<div class="note">${esc(g.note)}</div>` : ""}
             </div>
-            ${has
-              ? `<button class="btn btn-wa btn-sm" type="button" data-wa="${esc(g.url)}">${ICON_WA} Gruppe beitreten</button>`
-              : `<span class="btn btn-ghost btn-sm" aria-disabled="true">Link folgt</span>`}
+            <div class="group-actions">
+              ${has
+                ? `<button class="btn btn-wa btn-sm" type="button" data-wa="${esc(g.url)}">${ICON_WA} Gruppe beitreten</button>`
+                : `<span class="btn btn-ghost btn-sm" aria-disabled="true">Link folgt</span>`}
+              <button class="link-btn link-btn-sm" type="button" data-open-report data-uni="${esc(uni.name)}" data-group="${esc(g.name)}">Melden</button>
+            </div>
           </li>`;
         }).join("")}
       </ul>` : `
@@ -1335,6 +1416,113 @@ function showMailStep(subject, body, isLink){
     copyText(plain, "Nachricht kopiert"));
   document.getElementById("mailOpen").addEventListener("click", () =>
     setTimeout(closeModal, 400));
+}
+
+/* ============================================================
+   8b. PERSON / GRUPPE MELDEN
+   ------------------------------------------------------------
+   Eigenständiges, einfacheres Formular für Spam- oder
+   Verhaltensmeldungen. Nutzt dieselbe Netlify-Forms-Pipeline wie
+   die Einreichung, landet also in derselben Benachrichtigung.
+   ============================================================ */
+function openReport(prefillUni, prefillGroup){
+  openModal(`
+    <div class="modal-head">
+      <div>
+        <h2>Person oder Gruppe melden</h2>
+        <p>Spam, Belästigung oder anderes Fehlverhalten in einer Gruppe? Sag uns kurz, was los ist –
+        wir kümmern uns darum.</p>
+      </div>
+      <button class="x" data-close aria-label="Schließen">×</button>
+    </div>
+    <form class="modal-body" id="reportForm">
+      <div class="field">
+        <label for="rUni">Uni / Hochschule</label>
+        <input id="rUni" placeholder="optional" value="${esc(prefillUni || "")}">
+      </div>
+      <div class="field">
+        <label for="rGroup">Um welche Gruppe geht es?</label>
+        <input id="rGroup" placeholder="optional" value="${esc(prefillGroup || "")}">
+      </div>
+      <div class="field">
+        <label for="rWhat">Was ist passiert? *</label>
+        <textarea id="rWhat" required placeholder="Kurz beschreiben, was du melden möchtest"></textarea>
+      </div>
+      <div class="field">
+        <label for="rMail">Deine E-Mail</label>
+        <input id="rMail" type="email" placeholder="optional, für Rückfragen">
+      </div>
+      <input type="hidden" id="rSem" value="${esc(CONFIG.semester)}">
+      <div class="hp" aria-hidden="true">
+        <label for="rWebsite">Website</label>
+        <input id="rWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+    </form>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" data-close>Abbrechen</button>
+      <button class="btn btn-primary" type="submit" form="reportForm" id="reportBtn">Melden</button>
+    </div>`);
+
+  const el = id => document.getElementById(id);
+  const openedAt = Date.now();
+
+  el("reportForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const v = id => (el(id).value || "").trim();
+
+    // Gleicher Bot-Schutz wie beim Einreichungsformular.
+    if(v("rWebsite") || Date.now() - openedAt < 2500) return;
+
+    const subject = "[MELDUNG] " + (v("rUni") || "Ohne Uni-Angabe");
+    const body = [
+      "Meldung über eine Person oder Gruppe",
+      "",
+      "Uni / Hochschule: " + (v("rUni") || "–"),
+      "Gruppe: " + (v("rGroup") || "–"),
+      "Kontakt-E-Mail: " + (v("rMail") || "–"),
+      "",
+      "Was ist passiert:",
+      v("rWhat")
+    ].join("\n");
+
+    const btn = el("reportBtn");
+    if(btn){ btn.disabled = true; btn.textContent = "Wird gesendet…"; }
+
+    const payload = {
+      "form-name": "einreichung",
+      "bot-field": v("rWebsite"),
+      typ: "Meldung",
+      uni: v("rUni"),
+      gruppe: v("rGroup"),
+      semester: v("rSem"),
+      email: v("rMail"),
+      anmerkung: v("rWhat")
+    };
+    const encoded = Object.keys(payload)
+      .map(k => encodeURIComponent(k) + "=" + encodeURIComponent(payload[k]))
+      .join("&");
+
+    fetch("/", {
+      method: "POST",
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      body: encoded
+    })
+      .then(res => {
+        if(!res.ok) throw new Error("status " + res.status);
+        openModal(`
+          <div class="modal-head">
+            <div>
+              <h2>Danke für die Meldung</h2>
+              <p>Wir schauen uns das zeitnah an.</p>
+            </div>
+            <button class="x" data-close aria-label="Schließen">×</button>
+          </div>
+          <div class="modal-foot">
+            <button class="btn btn-primary" data-close>Schließen</button>
+          </div>`);
+      })
+      .catch(() => showMailStep(subject, body, false));
+  });
 }
 
 /* ============================================================
@@ -1907,6 +2095,13 @@ function renderLegal(which){
     verwendet. Wo KI bei der Erstellung der Inhalte eingesetzt wurde, ist im
     <a href="${LINK("impressum")}">Impressum</a> offengelegt.</p>
 
+    <h2>13. Werbung und Affiliate-Links</h2>
+    <p>Einzelne Seiten (etwa das Starterkit) enthalten Affiliate-Links, über die wir bei einem Kauf
+    eine Provision erhalten können, ohne dass dir zusätzliche Kosten entstehen. Es werden dabei keine
+    Cookies von unserer Seite gesetzt; ob und wie der jeweilige Partner (z. B. Amazon) beim Klick oder
+    nach der Weiterleitung Daten verarbeitet, regeln dessen eigene Datenschutzhinweise. Details zu
+    unseren Partnerprogrammen findest du im <a href="${LINK("transparenz")}">Transparenzhinweis</a>.</p>
+
     <p class="stand">Stand: ${new Date().toLocaleDateString("de-DE",{month:"long",year:"numeric"})}</p>
     <p class="stand">Diese Erklärung beschreibt den tatsächlichen Betrieb dieser Website, ersetzt
     aber keine Rechtsberatung.</p>`;
@@ -1917,6 +2112,189 @@ function renderLegal(which){
   document.getElementById("app").innerHTML =
     `<div class="wrap"><a class="crumb" href="${LINK("")}">← Zur Startseite</a>
      <article class="legal">${which === "impressum" ? imp : dsg}</article></div>`;
+}
+
+/* ============================================================
+   10b. TRANSPARENZ / STARTERKIT / FÜR FACHSCHAFTEN
+   ============================================================ */
+function renderTransparenz(){
+  document.title = "Transparenzhinweis – " + CONFIG.siteName;
+  setMeta("robots", "noindex");
+  setCanonical(CONFIG.siteUrl + "/transparenz");
+
+  const body = `
+    <h1>Transparenzhinweis</h1>
+    <p class="lead-note">${esc(CONFIG.siteName)} ist und bleibt kostenlos nutzbar. Einzelne Seiten
+    enthalten trotzdem Werbung in Form von Affiliate-Links — hier steht offen, was das bedeutet.</p>
+
+    <h2>1. Was ist ein Affiliate-Link?</h2>
+    <p>Ein Affiliate-Link ist ein ganz normaler Link zu einem Angebot eines anderen Unternehmens,
+    der zusätzlich eine Kennung enthält. Kaufst oder buchst du darüber etwas, erhalten wir dafür
+    unter Umständen eine kleine Provision vom jeweiligen Anbieter. Für dich ändert sich am Preis
+    nichts — du zahlst genau so viel wie ohne den Link.</p>
+
+    <h2>2. Wo werden Affiliate-Links eingesetzt?</h2>
+    <p>Aktuell ausschließlich auf der <a href="${LINK("starterkit")}">Starterkit-Seite</a>. Dort
+    weisen wir zusätzlich direkt an der jeweiligen Stelle mit „Werbung“ bzw. „Anzeige“ darauf hin,
+    dass es sich um einen Affiliate-Link handelt (Kennzeichnungspflicht nach § 5a UWG).
+    Die Uni-Liste, die Gruppenlinks und alle anderen Seiten enthalten keine Affiliate-Links.</p>
+
+    <h2>3. Aktuelle Partnerprogramme</h2>
+    <p>Wir nehmen am Amazon-Partnerprogramm (Amazon PartnerNet) teil, einem Affiliate-Programm zur
+    Bereitstellung eines Mediums für Websites, mittels dessen durch die Platzierung von
+    Werbeanzeigen und Links zu amazon.de Werbekostenerstattung verdient werden kann. Weitere
+    Partnerprogramme können hinzukommen; wir aktualisieren diese Seite dann entsprechend.</p>
+
+    <h2>4. Wie wählen wir Partner aus?</h2>
+    <p>Wir verlinken nur Angebote, die wir selbst für Studierende zu Semesterbeginn für sinnvoll
+    halten. Ob und wie oft ein Link geklickt wird, hat keinen Einfluss auf die Reihenfolge oder
+    Auswahl der Hochschulen und Gruppen auf dieser Website — beides bleibt strikt getrennt.</p>
+
+    <h2>5. Daten und Datenschutz</h2>
+    <p>Über unsere eigene Seite werden beim Klick auf einen Affiliate-Link keine Cookies gesetzt.
+    Was der jeweilige Partner nach der Weiterleitung verarbeitet, regeln dessen eigene
+    Datenschutzhinweise. Details dazu findest du in unserer
+    <a href="${LINK("datenschutz")}">Datenschutzerklärung</a>.</p>
+
+    <h2>6. Fragen?</h2>
+    <p>Schreib uns einfach an <a href="mailto:${esc(CONFIG.contactEmail)}">${esc(CONFIG.contactEmail)}</a>.</p>
+
+    <p class="stand">Stand: ${new Date().toLocaleDateString("de-DE",{month:"long",year:"numeric"})}</p>`;
+
+  document.getElementById("app").innerHTML =
+    `<div class="wrap"><a class="crumb" href="${LINK("")}">← Zur Startseite</a>
+     <article class="legal">${body}</article></div>`;
+}
+
+function renderStarterkit(){
+  document.title = "Starterkit fürs erste Semester – " + CONFIG.siteName;
+  setMeta("robots", "index, follow");
+  setCanonical(CONFIG.siteUrl + "/starterkit");
+
+  document.getElementById("app").innerHTML = `
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow">🎒 Starterkit</span>
+        <h1>Gut vorbereitet ins erste Semester</h1>
+        <p class="lead">Neben deiner Ersti-Gruppe gibt es ein paar Dinge, die sich vor dem
+        Semesterstart lohnen. Eine Auswahl — inklusive einem Angebot, bei dem wir offenlegen,
+        dass es sich um Werbung handelt.</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="starter-card">
+        <div>
+          <span class="ad-badge">📢 Werbung</span>
+          <h3>Amazon Prime Student</h3>
+          <p>6 Monate Prime kostenlos testen, danach vergünstigt weiter — u. a. schnellerer
+          Versand für Uni-Material und Prime Video/Music. Nur für Studierende mit gültiger
+          Immatrikulation.</p>
+          <p class="fine">Affiliate-Link · kein Mehrpreis für dich · mehr dazu im
+          <a href="${LINK("transparenz")}">Transparenzhinweis</a></p>
+        </div>
+        <a class="btn btn-primary" href="https://amzn.to/4c79cO1" target="_blank" rel="sponsored noopener noreferrer">Prime Student ansehen</a>
+      </div>
+
+      <section class="faq" aria-labelledby="starterHeading">
+        <h2 id="starterHeading">Checkliste fürs erste Semester</h2>
+        <ul class="checklist">
+          <li>Immatrikulation abgeschlossen und Studierendenausweis abgeholt oder beantragt</li>
+          <li>Semesterticket bzw. Deutschlandticket-Anspruch geklärt</li>
+          <li>Zugang zum Uni-Mailpostfach und zur Lernplattform eingerichtet</li>
+          <li>Deiner <a href="${LINK("")}">Ersti-Gruppe</a> beigetreten und erste Fragen gestellt</li>
+          <li>Stundenplan bzw. Modulwahl für das erste Semester geprüft</li>
+          <li>Bei Bedarf: BAföG-Antrag frühzeitig gestellt</li>
+        </ul>
+      </section>
+    </div>`;
+}
+
+function renderFachschaften(){
+  document.title = "Für Fachschaften – " + CONFIG.siteName;
+  setMeta("robots", "index, follow");
+  setCanonical(CONFIG.siteUrl + "/fachschaften");
+
+  const mailHref = "mailto:" + encodeURIComponent(CONFIG.contactEmail) +
+    "?subject=" + encodeURIComponent("Kooperation mit " + CONFIG.siteName);
+
+  document.getElementById("app").innerHTML = `
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow">🤝 Für Fachschaften</span>
+        <h1>Eure Erstis schneller in die richtige Gruppe bringen</h1>
+        <p class="lead">${esc(CONFIG.siteName)} sammelt WhatsApp-Gruppen für Erstsemester nach
+        Hochschule und Studiengang. Wenn ihr eure offizielle Gruppe bei uns hinterlegt, finden
+        neue Studierende sie leichter — ganz ohne Aufwand für eure Fachschaft.</p>
+        <a class="btn btn-primary" href="${esc(mailHref)}">Gruppe hinterlegen lassen</a>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="benefit-grid">
+        <div class="benefit-item">
+          <div class="ic">🏷️</div>
+          <h3>Offiziell gekennzeichnet</h3>
+          <p>Eure Gruppe wird eurer Hochschule und eurem Studiengang zugeordnet, damit Erstis
+          direkt die richtige finden — ohne Verwechslung mit inoffiziellen Gruppen.</p>
+        </div>
+        <div class="benefit-item">
+          <div class="ic">🔗</div>
+          <h3>Ein Link, den ihr überall teilen könnt</h3>
+          <p>Ihr bekommt eine feste Adresse auf ${esc(CONFIG.siteName)}, die ihr in eurer
+          eigenen Erstiwoche-Kommunikation, auf Flyern oder eurer Fachschaftsseite verlinken könnt.</p>
+        </div>
+        <div class="benefit-item">
+          <div class="ic">📅</div>
+          <h3>Erreicht Erstis vor Semesterstart</h3>
+          <p>Studierende suchen ihre Gruppe oft schon Wochen vor dem ersten Vorlesungstag — genau
+          dann, wenn ${esc(CONFIG.siteName)} gefunden wird.</p>
+        </div>
+        <div class="benefit-item">
+          <div class="ic">🆓</div>
+          <h3>Kostenlos und ohne Aufwand</h3>
+          <p>Ihr schickt uns den Link, wir prüfen und veröffentlichen ihn. Keine Anmeldung, keine
+          Pflege, keine Kosten für eure Fachschaft.</p>
+        </div>
+      </div>
+
+      <section class="faq" aria-labelledby="fsHeading">
+        <h2 id="fsHeading">So funktioniert's</h2>
+        <ol class="steps-numbered">
+          <li><span class="n">1</span><div><b>Link schicken</b><span> — per Mail oder über unser
+          <a href="${LINK("")}">Einreichungsformular</a> auf der Startseite.</span></div></li>
+          <li><span class="n">2</span><div><b>Wir prüfen kurz</b><span> — ob die Gruppe zu eurer
+          Hochschule passt und noch aktiv ist.</span></div></li>
+          <li><span class="n">3</span><div><b>Veröffentlichung</b><span> — meist innerhalb weniger
+          Tage, ihr bekommt eine kurze Bestätigung.</span></div></li>
+        </ol>
+      </section>
+
+      <section class="faq" aria-labelledby="fsFaqHeading">
+        <h2 id="fsFaqHeading">Häufige Fragen von Fachschaften</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>Müssen wir etwas bezahlen?</h3>
+            <p>Nein. Das Eintragen und Aktualisieren eurer Gruppe ist für Fachschaften komplett
+            kostenlos.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Können wir mehrere Gruppen hinterlegen?</h3>
+            <p>Ja — z. B. getrennt nach Studiengängen oder Jahrgängen. Schickt uns einfach alle
+            Links auf einmal.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Wie entfernen oder ändern wir einen Link?</h3>
+            <p>Eine formlose Mail an uns genügt, wir passen den Eintrag kurzfristig an.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Betreibt ihr die Gruppen?</h3>
+            <p>Nein. Eure Fachschaft bleibt vollständig verantwortlich für die Gruppe — wir
+            listen ausschließlich den Link.</p>
+          </div>
+        </div>
+      </section>
+    </div>`;
 }
 
 /* ============================================================
@@ -1955,6 +2333,13 @@ if(submitBtn) submitBtn.addEventListener("click", () => openSubmit("", "link"));
 document.addEventListener("click", e => {
   const t = e.target.closest("[data-open-submit]");
   if(t) openSubmit(t.dataset.uni || "", t.dataset.mode || "link");
+});
+
+const reportBtn = document.getElementById("btnReport");
+if(reportBtn) reportBtn.addEventListener("click", () => openReport("", ""));
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-open-report]");
+  if(t) openReport(t.dataset.uni || "", t.dataset.group || "");
 });
 // Gruppenlink erst im Klickmoment auflösen und öffnen – nicht als href im
 // Quelltext hinterlegen, siehe resolveUrl() weiter oben.
