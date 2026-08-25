@@ -449,11 +449,12 @@ main{padding-bottom:70px}
    FOOTER
    ============================================================ */
 .site-foot{border-top:1px solid var(--line);background:var(--bg-soft);padding:30px 0}
-.site-foot .wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--ink-2)}
-.site-foot a{color:var(--ink-2);text-decoration:none;margin-left:16px}
+.site-foot .wrap{display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--ink-2)}
+.site-foot nav{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px}
+.site-foot a{color:var(--ink-2);text-decoration:none}
 .site-foot a:hover{color:var(--brand)}
 .link-btn{
-  border:0;background:transparent;padding:0;margin-left:16px;cursor:pointer;
+  border:0;background:transparent;padding:0;cursor:pointer;
   font:inherit;font-size:13.5px;color:var(--ink-2);text-decoration:none;
 }
 .link-btn:hover{color:var(--brand)}
@@ -2225,12 +2226,12 @@ function renderStarterkit(){
       <section class="faq" aria-labelledby="starterHeading">
         <h2 id="starterHeading">Checkliste für den Studienstart</h2>
         <ul class="checklist">
-          <li>Immatrikulationsbescheinigung da, Studierendenausweis abgeholt oder beantragt</li>
-          <li>Anspruch auf Semesterticket bzw. Deutschlandticket geprüft</li>
-          <li>Uni-Mailadresse und Zugang zur Lernplattform freigeschaltet</li>
-          <li>In deiner <a href="${LINK("")}">Ersti-Gruppe</a> vorgestellt und erste Kontakte geknüpft</li>
-          <li>Vorlesungsverzeichnis angeschaut und Module fürs erste Semester gewählt</li>
-          <li>BAföG-Antrag frühzeitig gestellt, falls relevant</li>
+          <li><span>Immatrikulationsbescheinigung da, Studierendenausweis abgeholt oder beantragt</span></li>
+          <li><span>Anspruch auf Semesterticket bzw. Deutschlandticket geprüft</span></li>
+          <li><span>Uni-Mailadresse und Zugang zur Lernplattform freigeschaltet</span></li>
+          <li><span>In deiner <a href="${LINK("")}">Ersti-Gruppe</a> vorgestellt und erste Kontakte geknüpft</span></li>
+          <li><span>Vorlesungsverzeichnis angeschaut und Module fürs erste Semester gewählt</span></li>
+          <li><span>BAföG-Antrag frühzeitig gestellt, falls relevant</span></li>
         </ul>
       </section>
     </div>`;
