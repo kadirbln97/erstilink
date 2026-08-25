@@ -168,9 +168,16 @@ def page(cfg, *, title, description, path, body, jsonld=None, noindex=False):
       <a href="/starterkit">Starterkit</a>
     </nav>
     <div class="head-actions">
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileNav">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
       <button class="btn btn-primary btn-sm" id="btnSubmit">Gruppe einreichen</button>
     </div>
   </div>
+  <nav class="mobile-nav" id="mobileNav" hidden>
+    <a href="/fachschaften">Für Fachschaften</a>
+    <a href="/starterkit">Starterkit</a>
+  </nav>
 </header>
 
 <main id="app">%(body)s</main>
