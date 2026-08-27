@@ -264,11 +264,6 @@ def home_body(cfg, unis):
       <p class="lead">Finde die passende WhatsApp-Gruppe für Erstsemester an deiner Universität oder
       Hochschule. Wähle deine Uni und deinen Studiengang, tritt deiner Ersti-Gruppe bei und vernetze
       dich schon vor dem Semesterstart mit deinen Kommilitonen.</p>
-      <ol class="hero-steps">
-        <li><span>1</span>Uni auswählen</li>
-        <li><span>2</span>Studiengang finden</li>
-        <li><span>3</span>Gruppe beitreten</li>
-      </ol>
       <div class="hero-stats">
         <div class="stat"><b>%(n)d</b><span>Hochschulen</span></div>
         <div class="stat"><b>%(g)d</b><span>Gruppen</span></div>

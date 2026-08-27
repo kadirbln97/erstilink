@@ -28,10 +28,10 @@
   --ink:#181622;
   --ink-2:#413d4f;
   --ink-3:#726c80;
-  --line:#eae3d8;
-  --line-2:#f2ede2;
-  --bg:#fffdf9;
-  --bg-soft:#f8f3ea;
+  --line:#e3e6e8;
+  --line-2:#edeff1;
+  --bg:#ffffff;
+  --bg-soft:#f5f7f7;
   --brand:#075e54;
   --brand-dark:#054a41;
   --brand-soft:#e3f5f0;
@@ -64,7 +64,7 @@ button{font-family:inherit}
    HEADER
    ============================================================ */
 .site-head{
-  position:sticky;top:0;z-index:40;background:rgba(255,253,249,.88);
+  position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);
   backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line);
 }
 .site-head .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
@@ -152,16 +152,8 @@ button{font-family:inherit}
   margin:10px 0 0;font-size:clamp(30px,5.4vw,52px);line-height:1.08;
   letter-spacing:-.033em;font-weight:800;max-width:16ch;
 }
-.hero h1 em{font-style:normal;background:linear-gradient(90deg,#7dffb0,#4ade80);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 em{font-style:normal;color:#5eeba0}
 .hero p.lead{margin:18px 0 0;max-width:60ch;color:#cdeedb;font-size:clamp(15px,2vw,17.5px)}
-.hero-steps{
-  list-style:none;margin:26px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px 22px;counter-reset:step;
-}
-.hero-steps li{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:650;color:#e3faec}
-.hero-steps span{
-  display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
-  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);font-size:12px;font-weight:800;flex-shrink:0;
-}
 .hero-stats{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px}
 .trust-bar{
   list-style:none;margin:22px 0 0;padding:13px 18px;display:flex;flex-wrap:wrap;gap:9px 22px;
@@ -169,7 +161,7 @@ button{font-family:inherit}
 }
 .trust-bar li{font-size:13px;font-weight:600;color:#dff5e6;display:flex;align-items:center;gap:7px}
 .stat b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em}
-.stat span{font-size:12.5px;color:#9fdcb8;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.stat span{font-size:13px;color:#9fdcb8;font-weight:600}
 
 /* ============================================================
    SEARCH
@@ -328,7 +320,7 @@ main{padding-bottom:70px}
 }
 .starter-card{
   margin-top:28px;padding:26px;border-radius:var(--radius);border:1px solid var(--line);
-  background:linear-gradient(135deg,#fff8ec,#fff);display:flex;flex-wrap:wrap;gap:20px;
+  background:linear-gradient(135deg,var(--brand-soft),#fff);display:flex;flex-wrap:wrap;gap:20px;
   align-items:center;justify-content:space-between;
 }
 .starter-card h3{margin:0 0 6px;font-size:19px;letter-spacing:-.02em}
@@ -1033,11 +1025,6 @@ function renderHome(){
       <p class="lead">Finde die passende WhatsApp-Gruppe für Erstsemester an deiner Universität oder
       Hochschule. Wähle deine Uni und deinen Studiengang, tritt deiner Ersti-Gruppe bei und vernetze
       dich schon vor dem Semesterstart mit deinen Kommilitonen.</p>
-      <ol class="hero-steps">
-        <li><span>1</span>Uni auswählen</li>
-        <li><span>2</span>Studiengang finden</li>
-        <li><span>3</span>Gruppe beitreten</li>
-      </ol>
       <div class="hero-stats">
         <div class="stat"><b>${DATA.length}</b><span>Hochschulen</span></div>
         <div class="stat"><b>${totalGroups()}</b><span>Gruppen</span></div>
