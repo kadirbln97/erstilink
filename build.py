@@ -184,7 +184,7 @@ def page(cfg, *, title, description, path, body, jsonld=None, noindex=False):
 
 <footer class="site-foot">
   <div class="wrap">
-    <span>© <span id="year">%(year)s</span> %(name)s</span>
+    <span>© <span id="year">%(year)s</span> %(name)s · Website: <a href="https://spreeform.eu/de">SPREEFORM</a></span>
     <nav>
       <a href="/impressum">Impressum</a>
       <a href="/datenschutz">Datenschutz</a>
